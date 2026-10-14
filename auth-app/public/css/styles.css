@@ -722,10 +722,17 @@ h2 {
 .landing-body {
   display: block;
   padding: 0;
+  /* Fondo más oscuro para que la pelota resalte, con un brillo arriba */
   background:
-    radial-gradient(ellipse at 75% 10%, rgba(57, 255, 20, 0.14), transparent 45%),
-    var(--fondo);
+    radial-gradient(ellipse 70% 45% at 50% -5%, rgba(57, 255, 20, 0.09), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 100% 35%, rgba(57, 255, 20, 0.05), transparent 70%),
+    #0c0e0c;
   overflow-x: hidden;
+}
+
+/* Los efectos de fondo de la pelota no deben generar scroll horizontal */
+.landing-body main {
+  overflow-x: clip;
 }
 
 /* La marca también se usa como enlace */
@@ -745,7 +752,7 @@ a.dashboard-logo {
   gap: 12px;
   /* La barra ocupa todo el ancho, pero su contenido se alinea con el resto (máx. 1120px) */
   padding: 16px max(16px, calc((100% - 1072px) / 2));
-  background: rgba(18, 18, 18, 0.85);
+  background: rgba(12, 14, 12, 0.8);
   backdrop-filter: blur(10px);
 }
 
@@ -788,6 +795,26 @@ a.dashboard-logo {
   max-width: 1120px;
   margin: 0 auto;
   padding: 24px 16px 48px;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Cuadrícula de cancha detrás de la portada, solo alrededor de la pelota */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  background:
+    linear-gradient(rgba(57, 255, 20, 0.05) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, rgba(57, 255, 20, 0.05) 1px, transparent 1px) 0 0 / 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 40% at 50% 22%, #000, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 40% at 50% 22%, #000, transparent 75%);
+  pointer-events: none;
 }
 
 .hero-texto {
@@ -853,8 +880,10 @@ a.btn-neon {
   color: var(--neon);
 }
 
-/* La pelota 3D: escenario cuadrado con resplandor, anillo y sombra */
+/* La pelota 3D: escenario con foco de estadio, círculo central y sombra */
 .ball-stage {
+  --energia: 0;              /* de 0 a 1, lo actualiza ball.js según qué tan rápido gira */
+  --sombra: 1;               /* tamaño de la sombra: cambia cuando la pelota flota */
   position: relative;
   order: -1;                 /* en celular la pelota va arriba del texto */
   width: 100%;
@@ -863,34 +892,87 @@ a.btn-neon {
   display: flex;
   align-items: center;
   justify-content: center;
+  isolation: isolate;
 }
 
+/* Resplandor verde detrás de la pelota: se enciende más cuando gira rápido */
 .ball-stage::before {
   content: "";
   position: absolute;
-  inset: 4%;
+  inset: -20%;
+  z-index: -1;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, rgba(57, 255, 20, 0.3), rgba(57, 255, 20, 0.02) 62%);
-  filter: blur(2px);
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.28) 0%, rgba(57, 255, 20, 0.09) 30%, transparent 60%);
+  opacity: calc(0.7 + var(--energia) * 0.6);
+  transform: scale(calc(0.95 + var(--energia) * 0.12));
+  pointer-events: none;
 }
 
+/* Sombra en el piso: se achica cuando la pelota sube */
 .ball-stage::after {
   content: "";
   position: absolute;
-  left: 15%;
-  bottom: 2%;
-  width: 70%;
-  height: 12%;
+  left: 24%;
+  bottom: 7%;
+  width: 52%;
+  height: 7%;
+  z-index: -1;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6), transparent 75%);
+  background: radial-gradient(ellipse at center, rgba(57, 255, 20, 0.4), rgba(0, 0, 0, 0.6) 45%, transparent 72%);
+  transform: scaleX(var(--sombra));
+  opacity: calc(var(--sombra) * 0.85);
+  filter: blur(3px);
+  pointer-events: none;
 }
 
+/* Foco de estadio: un cono de luz que cae desde arriba sobre la pelota */
+.ball-foco {
+  position: absolute;
+  top: -45%;
+  bottom: 5%;
+  left: -25%;
+  right: -25%;
+  z-index: -1;
+  background: conic-gradient(at 50% 0%,
+    transparent 157deg,
+    rgba(220, 255, 210, 0.06) 168deg,
+    rgba(220, 255, 210, 0.11) 180deg,
+    rgba(220, 255, 210, 0.06) 192deg,
+    transparent 203deg);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 65%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 65%, transparent);
+  pointer-events: none;
+}
+
+/* Círculo central de la cancha */
 .ball-anillo {
   position: absolute;
-  inset: 0;
-  border: 1px dashed var(--neon-borde);
+  inset: 3%;
+  z-index: -1;
+  border: 1.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Anillo neón punteado que gira */
+.ball-anillo::before {
+  content: "";
+  position: absolute;
+  inset: 6%;
+  border: 1px dashed rgba(57, 255, 20, calc(0.22 + var(--energia) * 0.5));
   border-radius: 50%;
   animation: girar 40s linear infinite;
+}
+
+/* Línea media de la cancha, pasando por detrás de la pelota */
+.ball-anillo::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -45%;
+  right: -45%;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07) 25%, rgba(255, 255, 255, 0.07) 75%, transparent);
 }
 
 @keyframes girar {
@@ -914,6 +996,105 @@ a.btn-neon {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+/* Marcador con la velocidad del remate */
+.ball-hud {
+  position: absolute;
+  top: 2%;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid var(--neon-borde);
+  border-radius: 12px;
+  background: rgba(12, 14, 12, 0.75);
+  backdrop-filter: blur(6px);
+  font-family: 'Inter', sans-serif;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.96);
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none;
+}
+
+.ball-hud.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.ball-hud-titulo {
+  color: var(--gris);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.ball-hud strong {
+  display: inline-block;
+  color: var(--neon);
+  font-size: 13px;
+  font-weight: 700;
+  text-shadow: 0 0 14px rgba(57, 255, 20, 0.6);
+}
+
+.ball-hud-vel {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ball-hud small {
+  color: var(--gris);
+  font-size: 10px;
+}
+
+.ball-hud.golpe strong {
+  animation: hud-golpe 0.4s ease-out;
+}
+
+.ball-hud.record {
+  border-color: var(--neon);
+  box-shadow: var(--brillo);
+}
+
+.ball-hud.record .ball-hud-titulo {
+  color: var(--neon);
+}
+
+@keyframes hud-golpe {
+  from { transform: scale(1.35); }
+}
+
+/* Pista de cómo interactuar: desaparece después del primer uso */
+.ball-pista {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transform: translateX(-50%);
+  color: var(--gris);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.ball-pista .material-symbols-outlined {
+  color: var(--neon);
+  font-size: 16px;
+}
+
+.ball-usada .ball-pista,
+.sin-3d .ball-pista {
+  opacity: 0;
 }
 
 /* ===== 3 y 4. Secciones ===== */
@@ -2356,6 +2537,12 @@ button.btn-filtrar {
     max-width: 500px;
   }
 
+  /* La cuadrícula sigue a la pelota, que ahora está a la derecha */
+  .hero::before {
+    -webkit-mask-image: radial-gradient(ellipse 45% 60% at 72% 50%, #000, transparent 75%);
+    mask-image: radial-gradient(ellipse 45% 60% at 72% 50%, #000, transparent 75%);
+  }
+
   .landing-nav {
     padding-left: max(24px, calc((100% - 1072px) / 2));
     padding-right: max(24px, calc((100% - 1072px) / 2));
@@ -2471,7 +2658,7 @@ button.btn-filtrar {
 
 /* Usuarios que prefieren menos movimiento: sin animaciones */
 @media (prefers-reduced-motion: reduce) {
-  .ball-anillo {
+  .ball-anillo::before {
     animation: none;
   }
 

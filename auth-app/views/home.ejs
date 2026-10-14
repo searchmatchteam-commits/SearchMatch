@@ -35,8 +35,16 @@
 
       <!-- La pelota se dibuja con Three.js dentro de #ball-canvas (ver /js/ball.js) -->
       <div class="ball-stage">
+        <div class="ball-foco"></div>
         <div class="ball-anillo"></div>
         <div id="ball-canvas" aria-hidden="true"></div>
+        <!-- Velocidad del remate (la actualiza ball.js) -->
+        <div class="ball-hud" aria-hidden="true">
+          <span class="ball-hud-titulo">Remate</span>
+          <strong><span class="ball-hud-vel">0</span> km/h</strong>
+          <small>Récord <span class="ball-hud-record">0</span> km/h</small>
+        </div>
+        <p class="ball-pista"><span class="material-symbols-outlined">touch_app</span>Arrastra para girar · toca para rematar</p>
       </div>
     </section>
 
