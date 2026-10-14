@@ -1,0 +1,112 @@
+<%- include('partials/head', { titulo: 'Encuentra tu partido', descripcion: 'SearchMatch conecta jugadores, equipos y canchas para organizar tus pichangas en un solo lugar.' }) %>
+<body class="landing-body">
+
+  <!-- 1. Barra superior: marca y accesos -->
+  <header class="landing-nav">
+    <%- include('partials/marca', { enlace: '/' }) %>
+    <nav class="landing-nav-acciones">
+      <% if (user) { %>
+        <a href="/users/dashboard" class="btn-nav btn-nav-neon">Ir a mi panel</a>
+      <% } else { %>
+        <a href="/login" class="btn-nav">Iniciar sesión</a>
+        <a href="/register" class="btn-nav btn-nav-neon">Registrarse</a>
+      <% } %>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 2. Portada: texto a la izquierda y pelota 3D a la derecha -->
+    <section class="hero">
+      <div class="hero-texto">
+        <span class="badge-listo"><span class="punto-verde"></span>Listo para jugar</span>
+        <h1 class="hero-titulo">Encuentra tu partido, <span>arma tu equipo</span></h1>
+        <p class="hero-sub">SearchMatch conecta jugadores, equipos y canchas en un solo lugar.
+          Busca cupos cerca de ti, reserva cancha y organiza tus pichangas sin perseguir a nadie por WhatsApp.</p>
+
+        <div class="hero-acciones">
+          <% if (user) { %>
+            <a href="/users/dashboard" class="btn-neon">IR A MI PANEL <span class="material-symbols-outlined">arrow_forward</span></a>
+          <% } else { %>
+            <a href="/register" class="btn-neon">CREAR CUENTA <span class="material-symbols-outlined">arrow_forward</span></a>
+            <a href="/login" class="btn-borde">Ya tengo cuenta</a>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- La pelota se dibuja con Three.js dentro de #ball-canvas (ver /js/ball.js) -->
+      <div class="ball-stage">
+        <div class="ball-anillo"></div>
+        <div id="ball-canvas" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- 3. Qué ofrece la plataforma -->
+    <section class="landing-seccion">
+      <p class="landing-etiqueta">LA PLATAFORMA</p>
+      <h2 class="landing-titulo">Todo lo que necesitas para saltar a la cancha</h2>
+
+      <div class="features">
+        <article class="feature">
+          <div class="card-icono"><span class="material-symbols-outlined icono-verde">stadium</span></div>
+          <h3>Canchas</h3>
+          <p>Encuentra canchas disponibles cerca de ti, compara precios y reserva tu horario.</p>
+        </article>
+        <article class="feature">
+          <div class="card-icono"><span class="material-symbols-outlined icono-verde">shield</span></div>
+          <h3>Equipos</h3>
+          <p>Únete a equipos que buscan jugadores en tu posición o arma el tuyo desde cero.</p>
+        </article>
+        <article class="feature">
+          <div class="card-icono"><span class="material-symbols-outlined icono-verde">sports_soccer</span></div>
+          <h3>Partidos</h3>
+          <p>Revisa cupos abiertos, súmate a una pichanga y lleva tu calendario de partidos.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Cómo funciona en 3 pasos -->
+    <section class="landing-seccion">
+      <p class="landing-etiqueta">CÓMO FUNCIONA</p>
+      <h2 class="landing-titulo">De la app a la cancha en 3 pasos</h2>
+
+      <ol class="pasos">
+        <li class="paso">
+          <span class="paso-numero">1</span>
+          <div>
+            <h3>Crea tu cuenta</h3>
+            <p>Regístrate con tu correo y tu número de WhatsApp.</p>
+          </div>
+        </li>
+        <li class="paso">
+          <span class="paso-numero">2</span>
+          <div>
+            <h3>Busca tu partido</h3>
+            <p>Filtra por cancha, equipo o posición y envía tu solicitud.</p>
+          </div>
+        </li>
+        <li class="paso">
+          <span class="paso-numero">3</span>
+          <div>
+            <h3>A jugar</h3>
+            <p>Confirma tu cupo y nos vemos en la cancha.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 5. Llamado final -->
+    <% if (!user) { %>
+      <section class="landing-cta">
+        <h2 class="landing-titulo">¿Listo para tu próxima pichanga?</h2>
+        <p class="hero-sub">Crear tu cuenta toma menos de un minuto.</p>
+        <a href="/register" class="btn-neon btn-neon-fuerte">REGISTRARSE <span class="material-symbols-outlined">arrow_forward</span></a>
+      </section>
+    <% } %>
+  </main>
+
+  <!-- 6. Pie de página -->
+  <%- include('partials/footer') %>
+
+  <script type="module" src="/js/ball.js"></script>
+</body>
+</html>

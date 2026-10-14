@@ -1,0 +1,2484 @@
+/* ===== Colores de SearchMatch ===== */
+:root {
+  /* Colores de home y profile */
+  --carbon: #16181a;        /* fondo principal */
+  --carbon-claro: #212427;  /* tarjetas */
+  --borde: #2f3337;
+  --verde: #5a9e6f;         /* acento verde apagado */
+  --verde-hover: #4b8a5e;
+  --texto: #ffffff;
+  --texto-suave: #a9b0b5;
+  --rojo: #e0574c;          /* alertas de error */
+  --ambar: #e8b23a;         /* advertencia (IMC con sobrepeso) */
+
+  /* Colores de login, registro y dashboard (diseño Stitch) */
+  --fondo: #121212;                          /* negro carbón */
+  --superficie: #1c1c1c;                     /* tarjetas e inputs */
+  --borde-sutil: #2a2a2a;
+  --neon: #39ff14;                           /* verde neón principal */
+  --neon-oscuro: #0f2a0d;                    /* fondo de la píldora "Listo para jugar" */
+  --neon-borde: rgba(57, 255, 20, 0.25);     /* borde verde sutil */
+  --brillo: 0 0 20px rgba(57, 255, 20, 0.4); /* glow verde */
+  --gris: #9a9a9a;                           /* texto secundario */
+  --gris-claro: #c4c4c4;
+}
+
+/* ===== Base ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--carbon);
+  color: var(--texto);
+  font-family: 'Montserrat', sans-serif;   /* texto general */
+}
+
+/* Inter para títulos, etiquetas y botones */
+h1, h2, label, .dato-label {
+  font-family: 'Inter', sans-serif;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+/* ===== Mensajes flash (login, registro y dashboard) ===== */
+.alert {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* Alerta roja: algo falló */
+.alert-error {
+  background: rgba(220, 70, 60, 0.2);
+  border-left: 4px solid var(--rojo);
+  color: #ffb4ad;
+}
+
+.alert-error::before {
+  content: '✖ ';
+}
+
+/* Alerta verde: la acción salió bien */
+.alert-success {
+  background: rgba(57, 255, 20, 0.12);
+  border-left: 4px solid var(--neon);
+  color: #b8ffa8;
+}
+
+.alert-success::before {
+  content: '✔ ';
+}
+
+/* Etiqueta pequeña sobre un dato (perfil) */
+.dato-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  margin-bottom: 4px;
+}
+
+/* =========================================================
+   ÍCONOS (Material Symbols) - usados en login, registro y dashboard
+   ========================================================= */
+.material-symbols-outlined {
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* =========================================================
+   LOGIN Y REGISTRO (reemplazan los estilos anteriores de formularios)
+   ========================================================= */
+
+/* Fondo negro carbón para las pantallas de acceso */
+.auth-body {
+  background: var(--fondo);
+}
+
+/* Registro: resplandor verde en la parte superior, detrás del logo */
+.auth-body-registro {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(57, 255, 20, 0.18), transparent 55%),
+    var(--fondo);
+}
+
+/* Columna central con todo el contenido */
+.auth {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Logo: cuadrado redondeado con borde y brillo verde */
+.auth-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 24px;
+  background: var(--superficie);
+  border: 1px solid var(--neon-borde);
+  border-radius: 18px;
+  box-shadow: var(--brillo);
+  color: var(--neon);
+}
+
+.auth-logo .material-symbols-outlined {
+  font-size: 40px;
+}
+
+.auth-titulo {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.auth-subtitulo {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gris);
+  margin-bottom: 40px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+}
+
+/* Inputs del login: sin caja, solo línea inferior */
+.campo-linea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--borde-sutil);
+  color: var(--gris);
+}
+
+/* Inputs del registro: cada uno en su caja oscura */
+.campo-caja {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  margin-bottom: 14px;
+  background: var(--fondo);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 12px;
+  color: var(--gris);
+}
+
+/* El input ocupa el espacio libre y no tiene borde propio */
+.campo-linea input,
+.campo-caja input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--texto);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+}
+
+.campo-linea input::placeholder,
+.campo-caja input::placeholder {
+  color: var(--gris);
+}
+
+/* :focus-within se activa cuando el input de adentro tiene el foco:
+   la línea/borde y los íconos se vuelven verde neón */
+.campo-linea:focus-within {
+  border-bottom-color: var(--neon);
+  color: var(--neon);
+}
+
+.campo-caja:focus-within {
+  border-color: var(--neon);
+  color: var(--neon);
+}
+
+/* Tarjeta del formulario de registro */
+.auth-card {
+  padding: 24px 20px;
+  background: var(--superficie);
+  border: 1px solid var(--neon-borde);
+  border-radius: 16px;
+}
+
+.olvidaste {
+  align-self: flex-end;
+  margin: -8px 0 28px;
+  font-size: 13px;
+  color: var(--gris);
+  text-decoration: none;
+}
+
+/* Checkbox de términos */
+.terminos {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 6px 0 24px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--gris);
+  cursor: pointer;
+}
+
+.terminos input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--neon);   /* color del check marcado */
+}
+
+.terminos a {
+  color: var(--texto);
+  font-weight: 700;
+}
+
+/* Botón principal verde neón con brillo */
+.btn-neon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px;
+  background: var(--neon);
+  border: none;
+  border-radius: 12px;
+  box-shadow: var(--brillo);
+  color: var(--fondo);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+/* Registro: brillo más marcado */
+.btn-neon-fuerte {
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.6);
+}
+
+/* Texto de abajo: "¿No tienes cuenta? Regístrate" */
+.auth-pie {
+  margin-top: 28px;
+  font-size: 14px;
+  color: var(--gris);
+}
+
+.auth-pie a {
+  color: var(--neon);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* =========================================================
+   DASHBOARD (diseño móvil)
+   ========================================================= */
+
+/* El dashboard no va centrado como las tarjetas de login/registro */
+.dashboard-body {
+  display: block;
+  padding: 0;
+  background: var(--fondo);
+}
+
+/* Contenedor central: ancho de celular y espacio abajo para la barra fija */
+.dashboard {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 16px 16px 96px;
+}
+
+.icono-verde {
+  color: var(--neon);
+}
+
+.punto-verde {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--neon);
+}
+
+.link-verde {
+  color: var(--neon);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.link-flecha {
+  display: flex;
+  align-items: center;
+}
+
+.link-flecha .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* ===== 1. Barra superior ===== */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.dashboard-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 2px dashed var(--gris);
+  border-radius: 50%;
+  color: var(--gris);
+  text-decoration: none;
+}
+
+/* ===== 2. Saludo ===== */
+.saludo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.saludo-titulo {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.saludo-sub {
+  font-size: 13px;
+  color: var(--gris);
+}
+
+.badge-listo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--neon-oscuro);
+  border-radius: 999px;
+  color: var(--neon);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ===== 3. Botón principal ===== */
+.btn-buscar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: var(--neon);
+  border-radius: 12px;
+  box-shadow: var(--brillo);
+  color: var(--fondo);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* ===== 4. Barra informativa ===== */
+.info-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  margin-bottom: 28px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 12px;
+}
+
+.info-bar p {
+  flex: 1;
+  font-size: 13px;
+}
+
+/* ===== Secciones (títulos y encabezados) ===== */
+.seccion {
+  margin-bottom: 28px;
+}
+
+.seccion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.seccion-titulo {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.btn-filtrar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--borde-sutil);
+  border-radius: 8px;
+  color: var(--texto);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.btn-filtrar .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* ===== Tarjetas de canchas y equipos ===== */
+.card-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 12px;
+}
+
+.card-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: var(--fondo);
+  border-radius: 10px;
+  color: var(--gris);
+}
+
+/* min-width: 0 permite que el texto se corte con "..." */
+.card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-nombre,
+.card-detalle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-nombre {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.card-detalle {
+  font-size: 12px;
+  color: var(--gris);
+  margin-top: 2px;
+}
+
+/* Rating y precio de la cancha */
+.card-cancha-datos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--gris);
+}
+
+.icono-estrella {
+  font-size: 14px;
+  color: var(--neon);
+}
+
+.precio {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Botones pequeños de las tarjetas */
+.btn-reservar,
+.btn-solicitud,
+.btn-enviada {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-reservar {
+  background: var(--borde-sutil);
+  color: var(--neon);
+}
+
+.btn-solicitud {
+  background: var(--neon);
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+  color: var(--fondo);
+}
+
+.btn-enviada {
+  background: var(--borde-sutil);
+  color: var(--gris-claro);
+}
+
+/* ===== 8. Barra de navegación inferior ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0 14px;
+  background: var(--superficie);
+  border-top: 1px solid var(--borde-sutil);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--gris-claro);
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-item.activo {
+  color: var(--neon);
+}
+
+/* =========================================================
+   BOTÓN DEL OJO (mostrar / ocultar contraseña)
+   ========================================================= */
+.toggle-password {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--gris);
+  cursor: pointer;
+}
+
+.toggle-password:hover {
+  color: var(--neon);
+}
+
+/* =========================================================
+   PÁGINAS LEGALES (Términos y Condiciones / Política de Privacidad)
+   ========================================================= */
+.legal-body {
+  display: block;
+  padding: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(57, 255, 20, 0.12), transparent 40%),
+    var(--fondo);
+}
+
+.legal {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 16px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.legal-titulo {
+  font-size: 28px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.legal-fecha {
+  font-size: 13px;
+  color: var(--gris);
+  margin-bottom: 32px;
+}
+
+/* Cada sección es una tarjeta oscura */
+.legal-seccion {
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 14px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 12px;
+}
+
+.legal-seccion h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--neon);
+  margin-bottom: 10px;
+}
+
+.legal-seccion p,
+.legal-seccion li {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--gris-claro);
+}
+
+.legal-seccion p + p,
+.legal-seccion ul + p,
+.legal-seccion p + ul {
+  margin-top: 8px;
+}
+
+.legal-seccion ul {
+  padding-left: 20px;
+}
+
+.legal-seccion strong {
+  color: var(--texto);
+}
+
+.legal-seccion a {
+  color: var(--neon);
+}
+
+.legal-volver {
+  margin-top: 16px;
+  max-width: 420px;
+  text-decoration: none;
+}
+
+/* =========================================================
+   LANDING PAGE (página de inicio pública)
+   ========================================================= */
+.landing-body {
+  display: block;
+  padding: 0;
+  background:
+    radial-gradient(ellipse at 75% 10%, rgba(57, 255, 20, 0.14), transparent 45%),
+    var(--fondo);
+  overflow-x: hidden;
+}
+
+/* La marca también se usa como enlace */
+a.dashboard-logo {
+  color: var(--texto);
+  text-decoration: none;
+}
+
+/* ===== 1. Barra superior ===== */
+.landing-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  /* La barra ocupa todo el ancho, pero su contenido se alinea con el resto (máx. 1120px) */
+  padding: 16px max(16px, calc((100% - 1072px) / 2));
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(10px);
+}
+
+.landing-nav-acciones {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-nav {
+  padding: 8px 14px;
+  border: 1px solid var(--borde-sutil);
+  border-radius: 10px;
+  color: var(--texto);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-nav:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+}
+
+.btn-nav-neon,
+.btn-nav-neon:hover {
+  background: var(--neon);
+  border-color: var(--neon);
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+  color: var(--fondo);
+}
+
+/* ===== 2. Portada ===== */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.hero-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-texto .badge-listo {
+  margin-bottom: 20px;
+}
+
+.hero-titulo {
+  font-size: clamp(32px, 7vw, 56px);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.hero-titulo span {
+  color: var(--neon);
+  text-shadow: 0 0 24px rgba(57, 255, 20, 0.35);
+}
+
+.hero-sub {
+  max-width: 520px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gris);
+  margin-bottom: 28px;
+}
+
+.hero-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 360px;
+}
+
+/* En la landing los botones son enlaces */
+a.btn-neon {
+  text-decoration: none;
+}
+
+.btn-borde {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border: 1px solid var(--neon-borde);
+  border-radius: 12px;
+  color: var(--texto);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-borde:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+}
+
+/* La pelota 3D: escenario cuadrado con resplandor, anillo y sombra */
+.ball-stage {
+  position: relative;
+  order: -1;                 /* en celular la pelota va arriba del texto */
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ball-stage::before {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(57, 255, 20, 0.3), rgba(57, 255, 20, 0.02) 62%);
+  filter: blur(2px);
+}
+
+.ball-stage::after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  bottom: 2%;
+  width: 70%;
+  height: 12%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6), transparent 75%);
+}
+
+.ball-anillo {
+  position: absolute;
+  inset: 0;
+  border: 1px dashed var(--neon-borde);
+  border-radius: 50%;
+  animation: girar 40s linear infinite;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+#ball-canvas {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;        /* en celular el dedo gira la pelota en vez de hacer scroll */
+}
+
+#ball-canvas:active {
+  cursor: grabbing;
+}
+
+#ball-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== 3 y 4. Secciones ===== */
+.landing-seccion {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 16px;
+  text-align: center;
+}
+
+.landing-etiqueta {
+  margin-bottom: 8px;
+  color: var(--neon);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.landing-titulo {
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 auto 28px;
+  max-width: 560px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.feature {
+  padding: 22px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 16px;
+  text-align: left;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.feature:hover {
+  border-color: var(--neon-borde);
+  transform: translateY(-3px);
+}
+
+.feature h3,
+.paso h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 14px 0 6px;
+}
+
+.feature p,
+.paso p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--gris);
+}
+
+.pasos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  list-style: none;
+  text-align: left;
+}
+
+.paso {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 16px;
+}
+
+.paso h3 {
+  margin-top: 4px;
+}
+
+.paso-numero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--neon-oscuro);
+  border: 1px solid var(--neon-borde);
+  border-radius: 50%;
+  color: var(--neon);
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+}
+
+/* ===== 5. Llamado final ===== */
+.landing-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1088px;
+  margin: 24px 16px 48px;
+  padding: 40px 20px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(57, 255, 20, 0.16), transparent 70%),
+    var(--superficie);
+  border: 1px solid var(--neon-borde);
+  border-radius: 20px;
+  text-align: center;
+}
+
+.landing-cta .landing-titulo {
+  margin-bottom: 10px;
+}
+
+.landing-cta .btn-neon {
+  max-width: 320px;
+}
+
+/* ===== 6. Pie de página ===== */
+.landing-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 28px 16px 36px;
+  border-top: 1px solid var(--borde-sutil);
+  color: var(--gris);
+  font-size: 13px;
+}
+
+.landing-footer nav {
+  display: flex;
+  gap: 20px;
+}
+
+.landing-footer a {
+  color: var(--gris-claro);
+  text-decoration: none;
+}
+
+.landing-footer a:hover {
+  color: var(--neon);
+}
+
+/* =========================================================
+   ONBOARDING (elegir tipo de cuenta: jugador o equipo)
+   ========================================================= */
+
+/* Un poco más ancho que login/registro para que respiren los formularios */
+.auth-ancho {
+  max-width: 480px;
+}
+
+/* Barra de progreso de pasos */
+.pasos-barra {
+  display: flex;
+  gap: 6px;
+  width: 96px;
+  margin-bottom: 12px;
+}
+
+.pasos-barra span {
+  flex: 1;
+  height: 4px;
+  background: var(--borde-sutil);
+  border-radius: 999px;
+}
+
+.pasos-barra .activo {
+  background: var(--neon);
+  box-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
+}
+
+/* Tarjetas de tipo de cuenta */
+.tipos-cuenta {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.tipo-cuenta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 16px;
+  color: var(--texto);
+  text-align: left;
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.tipo-cuenta:hover,
+.tipo-cuenta:focus-visible {
+  border-color: var(--neon);
+  box-shadow: 0 0 24px rgba(57, 255, 20, 0.2);
+  transform: translateY(-2px);
+}
+
+.tipo-cuenta-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  background: var(--neon-oscuro);
+  border: 1px solid var(--neon-borde);
+  border-radius: 14px;
+  color: var(--neon);
+}
+
+.tipo-cuenta-icono .material-symbols-outlined {
+  font-size: 30px;
+}
+
+.tipo-cuenta-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.tipo-cuenta-titulo {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.tipo-cuenta-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--gris);
+}
+
+.tipo-cuenta-flecha {
+  color: var(--gris);
+}
+
+.tipo-cuenta:hover .tipo-cuenta-flecha {
+  color: var(--neon);
+}
+
+/* Etiqueta sobre cada campo */
+.campo-etiqueta {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--gris-claro);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.opcional {
+  color: var(--gris);
+  font-weight: 400;
+}
+
+.campo-ayuda {
+  margin: -6px 0 14px;
+  font-size: 12px;
+  color: var(--gris);
+}
+
+/* Dos campos lado a lado (altura y peso) */
+.campo-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Los <select> se ven igual que los inputs */
+.campo-caja select {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--texto);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.campo-caja select option,
+.campo-caja select optgroup {
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+/* El ícono del calendario de los input date en blanco */
+.campo-caja input[type="date"] {
+  color-scheme: dark;
+}
+
+/* Chips de posiciones: checkbox escondido, el texto hace de botón */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.chip {
+  position: relative;
+  cursor: pointer;
+}
+
+.chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chip span {
+  display: inline-block;
+  padding: 9px 16px;
+  background: var(--fondo);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 999px;
+  color: var(--gris-claro);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.chip:hover span {
+  border-color: var(--neon-borde);
+}
+
+/* Marcado: verde neón */
+.chip input:checked + span,
+.chip-fijo span {
+  background: var(--neon-oscuro);
+  border-color: var(--neon);
+  color: var(--neon);
+}
+
+/* Se ve el foco al navegar con teclado */
+.chip input:focus-visible + span {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+}
+
+.chip-fijo {
+  cursor: default;
+}
+
+.link-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.link-volver .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* =========================================================
+   PERFIL
+   ========================================================= */
+
+/* Botones redondos de la barra superior (volver / salir) */
+.icono-boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 50%;
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.icono-boton:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+}
+
+/* Tarjeta principal con resplandor verde arriba */
+.perfil-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 24px;
+  margin-bottom: 14px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(57, 255, 20, 0.18), transparent 65%),
+    var(--superficie);
+  border: 1px solid var(--neon-borde);
+  border-radius: 20px;
+  text-align: center;
+}
+
+/* Avatar con las iniciales y anillo neón */
+.perfil-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 16px;
+  background: var(--fondo);
+  border: 3px solid var(--neon);
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px rgba(57, 255, 20, 0.12), var(--brillo);
+  color: var(--neon);
+  font-family: 'Inter', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.perfil-nombre {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.perfil-apodo {
+  margin-top: 4px;
+  color: var(--gris-claro);
+  font-style: italic;
+}
+
+.perfil-hero .badge-listo {
+  margin-top: 12px;
+}
+
+.badge-listo .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.perfil-desde {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--gris);
+}
+
+/* Tres recuadros de datos rápidos */
+.perfil-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 16px 8px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 14px;
+  text-align: center;
+}
+
+.stat-valor {
+  color: var(--neon);
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+/* Valores de texto (ej: comuna) más chicos y cortados con "..." */
+.stat-texto {
+  max-width: 100%;
+  font-size: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--gris);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.perfil .seccion-titulo {
+  margin-bottom: 12px;
+}
+
+.perfil .seccion-header .seccion-titulo {
+  margin-bottom: 0;
+}
+
+/* Lista de datos con ícono (contacto, ubicación) */
+.lista-datos {
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 14px;
+}
+
+.lista-dato {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.lista-dato + .lista-dato {
+  border-top: 1px solid var(--borde-sutil);
+}
+
+.lista-dato .dato-label {
+  margin-bottom: 2px;
+  font-size: 11px;
+}
+
+/* Estado vacío (sin equipos / sin jugadores) */
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  border: 1px dashed var(--borde-sutil);
+  border-radius: 14px;
+  color: var(--gris);
+  font-size: 14px;
+  text-align: center;
+}
+
+.vacio .material-symbols-outlined {
+  font-size: 32px;
+}
+
+/* Cerrar sesión: rojo suave */
+.btn-salir {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid rgba(224, 87, 76, 0.4);
+  border-radius: 12px;
+  color: var(--rojo);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-salir:hover {
+  background: rgba(224, 87, 76, 0.1);
+}
+
+/* =========================================================
+   FOTO DE PERFIL Y EDITAR PERFIL
+   ========================================================= */
+
+/* La foto llena el círculo del avatar y se recorta sin deformarse */
+.perfil-avatar {
+  overflow: hidden;
+}
+
+.perfil-avatar img,
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Avatar pequeño de la barra superior cuando hay foto: borde sólido verde */
+.avatar-foto {
+  overflow: hidden;
+  border: 2px solid var(--neon);
+}
+
+/* Botón "Editar perfil" dentro de la tarjeta principal */
+.btn-editar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 8px 16px;
+  border: 1px solid var(--neon-borde);
+  border-radius: 999px;
+  color: var(--neon);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-editar:hover {
+  background: var(--neon-oscuro);
+}
+
+.btn-editar .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* Tarjeta de la foto en "Editar perfil" */
+.editar-foto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.editar-foto .perfil-avatar {
+  margin-bottom: 6px;
+}
+
+.editar-foto .campo-ayuda {
+  margin: 0;
+}
+
+/* El input de archivo se oculta; el <label> es el que se ve como botón */
+.btn-archivo {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.input-foto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.btn-archivo:focus-within {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+}
+
+.link-quitar {
+  background: none;
+  border: none;
+  color: var(--rojo);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.link-quitar:hover {
+  text-decoration: underline;
+}
+
+/* Campo que se muestra pero no se puede editar (correo principal) */
+.campo-bloqueado {
+  opacity: 0.6;
+}
+
+/* =========================================================
+   MEDIDOR DE IMC (perfil del jugador)
+   ========================================================= */
+.medidor-imc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 16px 18px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.medidor-imc svg {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Color de cada tramo (se usa como "color" para que el brillo tome el mismo tono) */
+.arco-bajo      { color: var(--verde); }
+.arco-normal    { color: var(--neon); }
+.arco-sobrepeso { color: var(--ambar); }
+.arco-obesidad  { color: var(--rojo); }
+
+/* Los tramos son arcos sin relleno; los que no corresponden se ven apagados */
+.arco {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 14;
+  opacity: 0.3;
+}
+
+.arco-activo {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.medidor-corte {
+  fill: var(--gris);
+  font-family: 'Inter', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* Flecha: gira desde la izquierda hasta el valor del jugador al cargar la página */
+.medidor-flecha {
+  fill: var(--texto);
+  transform-box: view-box;
+  transform-origin: 100px 100px;
+  transform: rotate(var(--giro));
+  animation: medidor-girar 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes medidor-girar {
+  from {
+    transform: rotate(-90deg);
+  }
+}
+
+/* Valor grande y píldora con la categoría, del color de su tramo */
+.medidor-valor {
+  margin-top: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.medidor-categoria {
+  margin-top: 8px;
+  padding: 4px 12px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.medidor-bajo .medidor-valor,
+.medidor-bajo .medidor-categoria      { color: var(--verde); }
+.medidor-normal .medidor-valor,
+.medidor-normal .medidor-categoria    { color: var(--neon); }
+.medidor-sobrepeso .medidor-valor,
+.medidor-sobrepeso .medidor-categoria { color: var(--ambar); }
+.medidor-obesidad .medidor-valor,
+.medidor-obesidad .medidor-categoria  { color: var(--rojo); }
+
+.medidor-leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 14px;
+  margin-top: 16px;
+  list-style: none;
+  color: var(--gris);
+  font-size: 11px;
+}
+
+.medidor-leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.punto-leyenda {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medidor-flecha {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   PARTIDOS
+   ========================================================= */
+
+/* Los botones de las tarjetas también se usan como <button> dentro de un <form> */
+button.btn-reservar,
+button.btn-solicitud,
+button.btn-filtrar {
+  border: none;
+  cursor: pointer;
+}
+
+/* Aceptar / rechazar un desafío, uno al lado del otro */
+.card-acciones {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-rechazar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: 1px solid rgba(224, 87, 76, 0.4);
+  border-radius: 8px;
+  color: var(--rojo);
+  cursor: pointer;
+}
+
+.btn-rechazar:hover {
+  background: rgba(224, 87, 76, 0.1);
+}
+
+.btn-rechazar .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* Píldoras pequeñas: "Cerca de ti" y "Confirmado" */
+.etiqueta-cerca,
+.etiqueta-estado {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--neon-oscuro);
+  color: var(--neon);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.etiqueta-cerca {
+  margin-left: 4px;
+}
+
+.etiqueta-estado {
+  flex-shrink: 0;
+}
+
+/* Filtro de partidos abiertos: los selects y el botón en una fila */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.filtros .campo-caja {
+  flex: 1 1 160px;
+  margin-bottom: 0;
+}
+
+.filtros .campo-caja select {
+  padding: 10px 0;
+  font-size: 13px;
+}
+
+.filtros .btn-filtrar {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* El ícono del reloj de los input time en blanco */
+.campo-caja input[type="time"] {
+  color-scheme: dark;
+}
+
+/* =========================================================
+   SOLICITUDES PARA UNIRSE A UN EQUIPO (dashboard)
+   ========================================================= */
+.estado-rechazada {
+  color: var(--rojo);
+}
+
+.estado-vencida {
+  color: var(--ambar);
+}
+
+/* En las tarjetas de equipos el texto de estado puede ser largo: se deja en varias líneas */
+.card-detalle.estado-rechazada,
+.card-detalle.estado-vencida {
+  white-space: normal;
+}
+
+/* =========================================================
+   NOTIFICACIONES Y CONVOCATORIAS
+   ========================================================= */
+
+/* Campana y avatar juntos a la derecha de la barra superior */
+.cabecera-acciones {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.campana {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--gris-claro);
+  text-decoration: none;
+}
+
+.campana:hover {
+  color: var(--neon);
+}
+
+/* Número de notificaciones sin leer */
+.campana-numero {
+  position: absolute;
+  top: 0;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: var(--neon);
+  border: 2px solid var(--fondo);
+  border-radius: 999px;
+  color: var(--fondo);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 14px;
+  text-align: center;
+}
+
+/* Cada notificación es un enlace con forma de tarjeta */
+.notificacion {
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.notificacion-nueva {
+  border-color: var(--neon-borde);
+  background: linear-gradient(90deg, rgba(57, 255, 20, 0.06), var(--superficie));
+}
+
+.notificacion-mensaje {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.notificacion-nueva .notificacion-mensaje {
+  font-weight: 600;
+}
+
+/* Pedido para jugar rechazado */
+.etiqueta-rechazada {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border: 1px solid rgba(224, 87, 76, 0.4);
+  border-radius: 999px;
+  color: var(--rojo);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   CANCHAS (mapa y lista)
+   ========================================================= */
+
+/* Filtro "Con precio o contacto" con forma de chip */
+.filtro-chip span {
+  padding: 10px 14px;
+  font-size: 12px;
+}
+
+.mapa-contenedor {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.mapa {
+  height: 380px;
+  background: var(--superficie);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 16px;
+  overflow: hidden;
+  z-index: 0; /* para que la barra inferior quede encima del mapa */
+}
+
+/* Modo oscuro para el mapa claro de OpenStreetMap: invierte los colores y
+   vuelve a girar el tono para que el agua siga azul y los parques verdes */
+.mapa .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9) saturate(0.6);
+}
+
+.mapa-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  color: var(--rojo);
+}
+
+/* Botón flotante sobre el mapa */
+.btn-ubicacion {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--neon);
+  border: none;
+  border-radius: 999px;
+  box-shadow: var(--brillo);
+  color: var(--fondo);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-ubicacion:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.btn-ubicacion .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.mapa-leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 10px;
+  list-style: none;
+  color: var(--gris);
+  font-size: 11px;
+}
+
+.mapa-leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Marcadores: círculos verdes (los verificados, más grandes y con brillo) */
+.marcador-cancha,
+.marcador-muestra {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: var(--verde);
+  border: 2px solid var(--fondo);
+  border-radius: 50%;
+}
+
+.marcador-verificada {
+  width: 18px;
+  height: 18px;
+  background: var(--neon);
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.8);
+}
+
+.marcador-usuario {
+  background: #fff;
+  border: 4px solid #3b82f6;
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.25);
+}
+
+/* Grupos de marcadores (cuántas canchas hay en la zona) */
+.grupo-canchas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(57, 255, 20, 0.18);
+  border-radius: 50%;
+}
+
+.grupo-canchas span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--neon-oscuro);
+  border: 2px solid var(--neon);
+  border-radius: 50%;
+  color: var(--neon);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.grupo-grande span {
+  background: var(--neon);
+  color: var(--fondo);
+}
+
+/* Ficha (popup) del mapa con los colores de la app.
+   Llevan .mapa delante para ganarle a leaflet.css, que se carga después */
+.mapa .leaflet-popup-content-wrapper,
+.mapa .leaflet-popup-tip {
+  background: var(--superficie);
+  color: var(--texto);
+  border: 1px solid var(--neon-borde);
+}
+
+.mapa .leaflet-popup-content {
+  margin: 14px 16px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.mapa .leaflet-popup-content p {
+  margin: 0 0 4px;
+}
+
+.mapa a.leaflet-popup-close-button {
+  color: var(--gris);
+}
+
+.ficha-nombre {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ficha-detalle {
+  color: var(--gris-claro);
+  font-size: 12px;
+}
+
+.ficha-precio {
+  color: var(--neon);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+.mapa .leaflet-popup-content .ficha-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.mapa .ficha-acciones a {
+  padding: 5px 10px;
+  background: var(--borde-sutil);
+  border-radius: 999px;
+  color: var(--neon);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.mapa .leaflet-popup-content .ficha-fuente {
+  margin-top: 8px;
+  color: var(--gris);
+  font-size: 11px;
+  font-style: italic;
+}
+
+.mapa.leaflet-container .leaflet-control-attribution {
+  background: rgba(18, 18, 18, 0.8);
+  color: var(--gris);
+}
+
+.mapa .leaflet-control-attribution a {
+  color: var(--gris-claro);
+}
+
+/* Lista de canchas */
+.lista-referencia {
+  margin: -4px 0 12px;
+  color: var(--gris);
+  font-size: 12px;
+}
+
+.lista-referencia strong {
+  color: var(--texto);
+}
+
+.card-cancha {
+  align-items: flex-start;
+}
+
+.cancha-etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.etiqueta-distancia {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--gris-claro);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.etiqueta-distancia .material-symbols-outlined {
+  font-size: 14px;
+  color: var(--neon);
+}
+
+.cancha-acciones {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* Botones redondos chicos (WhatsApp, llamar, ver en mapa) */
+.icono-accion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--borde-sutil);
+  border-radius: 50%;
+  color: var(--neon);
+  text-decoration: none;
+}
+
+.icono-accion:hover {
+  background: var(--neon-oscuro);
+}
+
+.icono-accion .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.fuente-datos {
+  margin-top: 14px;
+  color: var(--gris);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.fuente-datos a {
+  color: var(--gris-claro);
+}
+
+/* =========================================================
+   RESPONSIVE
+   Diseño "mobile first": los estilos de arriba son para celular
+   y estas reglas los adaptan a pantallas más grandes o muy chicas.
+   ========================================================= */
+
+/* Brillo al pasar el mouse por los botones verdes */
+.btn-neon,
+.btn-buscar,
+.btn-solicitud {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.btn-neon:hover,
+.btn-buscar:hover,
+.btn-solicitud:hover {
+  box-shadow: 0 0 32px rgba(57, 255, 20, 0.6);
+  transform: translateY(-1px);
+}
+
+/* La marca nunca se parte en dos líneas */
+.dashboard-logo {
+  white-space: nowrap;
+}
+
+/* ----- Celulares (hasta 420px) ----- */
+@media (max-width: 420px) {
+  /* En la landing basta con "Registrarse": "Ya tengo cuenta" está en la portada */
+  .landing-nav .btn-nav:not(.btn-nav-neon) {
+    display: none;
+  }
+
+  /* Los saltos de línea forzados se ven mal en pantallas angostas */
+  .auth-subtitulo br {
+    display: none;
+  }
+}
+
+/* ----- Celulares muy pequeños (hasta 380px) ----- */
+@media (max-width: 380px) {
+  .auth-titulo,
+  .saludo-titulo,
+  .legal-titulo {
+    font-size: 24px;
+  }
+
+  .auth-subtitulo {
+    margin-bottom: 28px;
+  }
+
+  /* El saludo y la píldora "Listo para jugar" pasan a dos filas */
+  .saludo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Las tarjetas bajan el botón a una segunda fila */
+  .card-item {
+    flex-wrap: wrap;
+  }
+
+  .card-item .btn-reservar,
+  .card-item .btn-solicitud,
+  .card-item .btn-enviada {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Igual con los botones que van dentro de un formulario (Partidos) */
+  .card-item > form,
+  .card-acciones {
+    width: 100%;
+  }
+
+  .card-acciones form:first-child {
+    flex: 1;
+  }
+
+  .landing-nav .dashboard-logo {
+    font-size: 11px;
+  }
+
+  .btn-nav {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+}
+
+/* ----- Tablets (desde 600px) ----- */
+@media (min-width: 600px) {
+  .auth-card {
+    padding: 32px 28px;
+  }
+
+  .hero-acciones {
+    flex-direction: row;
+    width: auto;
+    max-width: none;
+  }
+
+  .hero-acciones .btn-neon,
+  .hero-acciones .btn-borde {
+    width: auto;
+    padding: 16px 28px;
+  }
+
+  .ball-stage {
+    max-width: 380px;
+  }
+
+  .features,
+  .pasos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .paso {
+    flex-direction: column;
+  }
+
+  .landing-footer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .legal {
+    padding: 56px 24px 64px;
+  }
+
+  .legal-seccion {
+    padding: 24px 28px;
+  }
+
+  /* Dashboard más ancho */
+  .dashboard {
+    max-width: 720px;
+    padding: 24px 24px 110px;
+  }
+
+  /* La barra inferior se vuelve una "píldora" flotante centrada */
+  .bottom-nav {
+    left: 50%;
+    right: auto;
+    bottom: 16px;
+    width: 440px;
+    transform: translateX(-50%);
+    padding: 10px 0;
+    border: 1px solid var(--borde-sutil);
+    border-radius: 999px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-item:hover {
+    color: var(--neon);
+  }
+}
+
+/* ----- Escritorio (desde 960px) ----- */
+@media (min-width: 960px) {
+  /* Portada en dos columnas: texto a la izquierda, pelota a la derecha */
+  .hero {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 48px;
+    min-height: calc(100vh - 72px);
+    padding: 24px 24px 64px;
+  }
+
+  .hero-texto {
+    flex: 1;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .ball-stage {
+    order: 0;
+    flex: 1;
+    max-width: 500px;
+  }
+
+  .landing-nav {
+    padding-left: max(24px, calc((100% - 1072px) / 2));
+    padding-right: max(24px, calc((100% - 1072px) / 2));
+  }
+
+  .landing-seccion,
+  .landing-footer {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .landing-seccion {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .landing-cta {
+    margin: 32px auto 64px;
+    padding: 56px 24px;
+  }
+
+  /* Dashboard en dos columnas: canchas y equipos lado a lado */
+  .dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    max-width: 1080px;
+    padding: 32px 32px 120px;
+  }
+
+  .dashboard > * {
+    grid-column: 1 / -1;
+  }
+
+  .dashboard > .seccion {
+    grid-column: auto;
+  }
+
+  .dashboard > .seccion:last-of-type {
+    grid-column: 1 / -1;
+  }
+
+  .saludo-titulo {
+    font-size: 34px;
+  }
+
+  /* El botón principal no ocupa todo el ancho en escritorio */
+  .btn-buscar {
+    justify-self: start;
+    width: auto;
+    padding: 16px 40px;
+  }
+
+  .card-item {
+    transition: border-color 0.2s;
+  }
+
+  .card-item:hover {
+    border-color: var(--neon-borde);
+  }
+
+  /* Canchas: mapa a la izquierda (queda fijo al bajar) y la lista a la derecha */
+  .canchas-pagina {
+    grid-template-columns: 3fr 2fr;
+    align-items: start;
+  }
+
+  .canchas-pagina > .mapa-contenedor {
+    grid-column: 1;
+    position: sticky;
+    top: 24px;
+  }
+
+  .canchas-pagina > .seccion,
+  .canchas-pagina > .seccion:last-of-type {
+    grid-column: 2;
+  }
+
+  .canchas-pagina .mapa {
+    height: calc(100vh - 140px);
+    min-height: 480px;
+  }
+
+  /* Perfil: tarjeta principal fija a la izquierda y el detalle a la derecha */
+  .perfil {
+    grid-template-columns: 340px 1fr;
+    align-items: start;
+  }
+
+  .perfil > .perfil-hero {
+    grid-column: 1;
+    grid-row: 2 / span 6;
+    position: sticky;
+    top: 24px;
+  }
+
+  /* El mensaje flash ("Perfil actualizado") va en la columna derecha: si ocupara
+     las dos columnas empujaría todo el contenido debajo de la tarjeta principal */
+  .perfil > .alert,
+  .perfil > .perfil-stats,
+  .perfil > .seccion,
+  .perfil > .seccion:last-of-type,
+  .perfil > .btn-salir {
+    grid-column: 2;
+  }
+
+  .perfil > .btn-salir {
+    justify-self: start;
+    width: auto;
+    padding: 12px 28px;
+  }
+}
+
+/* Usuarios que prefieren menos movimiento: sin animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .ball-anillo {
+    animation: none;
+  }
+
+  .feature,
+  .btn-neon,
+  .btn-buscar,
+  .btn-solicitud {
+    transition: none;
+  }
+}
