@@ -54,18 +54,39 @@ async function obtenerEquipos() {
   }
 }
 
+// Trae el perfil del jugador (apodo y primera posición) a partir del id de usuario.
+// Si no tiene perfil de jugador o algo falla, devuelve null.
+async function obtenerPerfil(idUsuario) {
+  try {
+    const supabase = require('../config/db');
+    const { data, error } = await supabase
+      .from('jugador')
+      .select('nombre_apodo, jugador_posicion(posicion(nombre))')
+      .eq('id_usuario', idUsuario)
+      .maybeSingle();
+    if (error || !data) return null;
+    const primera = data.jugador_posicion[0];
+    return {
+      nombre: data.nombre_apodo,
+      posicion: primera && primera.posicion ? primera.posicion.nombre : null
+    };
+  } catch {
+    return null;
+  }
+}
+
 // GET /users/dashboard: armar los datos y mostrar el panel
 async function mostrarDashboard(req, res) {
-  // Nombre simple para el saludo (etapa 2: de la sesión; luego vendrá del perfil jugador)
-  const nombre = (req.session.user && req.session.user.correo)
-    ? req.session.user.correo.split('@')[0]
-    : 'Ruperto';
-
+  const perfil = await obtenerPerfil(req.session.user.id);
   const canchasDb = await obtenerCanchas();
   const equiposDb = await obtenerEquipos();
 
+  // Valores por defecto si el usuario aún no completa su perfil de jugador
+  const nombre = (perfil && perfil.nombre) || 'Jugador';
+  const posicion = (perfil && perfil.posicion) || 'Delantero';
+
   res.render('dashboard', {
-    usuario: { nombre, posicion: 'Delantero' },
+    usuario: { nombre, posicion },
     cupos: DATOS_EJEMPLO.cupos,
     canchas: canchasDb || DATOS_EJEMPLO.canchas,
     equipos: equiposDb || DATOS_EJEMPLO.equipos

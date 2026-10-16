@@ -1,6 +1,9 @@
 <%- include('partials/head', { titulo: 'Mi panel', descripcion: 'Tu panel en SearchMatch: canchas, equipos y próximos partidos.', styles: ['/css/dashboard.css'], scripts: [{ src: '/js/ball.js', type: 'module' }] }) %>
 <body class="dashboard-body">
 
+  <!-- Menú lateral (escritorio): 'inicio' queda marcado como activo -->
+  <%- include('partials/dashboard/_sidebar', { usuario, activo: 'inicio' }) %>
+
   <!-- Panel principal: el controlador entrega usuario, cupos, canchas y equipos -->
   <main class="dashboard dashboard-panel">
     <!-- Barra superior con logo y accesos -->

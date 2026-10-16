@@ -47,50 +47,89 @@
   border-radius: 50%;
 }
 
-/* Saludo con balón al lado: texto a la izquierda, balón a la derecha */
+/* Saludo corto arriba de la tarjeta ("Hola, nombre") */
+.panel-saludo {
+  margin-bottom: 14px; /* aire antes de la tarjeta */
+}
+.panel-saludo-titulo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow: hidden; /* si el nombre es muy largo, se corta con "..." */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.panel-saludo-sub {
+  color: var(--gris); /* texto secundario en gris */
+  font-size: 0.95rem;
+}
+
+/* Tarjeta principal: borde verde tenue y fondo negro que se vuelve verde
+   oscuro hacia la derecha, donde está el balón (como la referencia) */
 .panel-hero {
-  display: flex; /* pone texto y balón en una fila */
-  justify-content: space-between; /* los separa a los extremos */
-  align-items: center; /* los centra verticalmente */
-  gap: 20px; /* aire entre texto y balón */
+  display: flex; /* texto y balón en una fila */
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
   margin-bottom: 20px; /* separa de la barra informativa */
+  border: 1px solid rgba(57, 255, 20, 0.2);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse 45% 90% at 80% 50%, rgba(57, 255, 20, 0.16), transparent 70%),
+    linear-gradient(90deg, #0b0f0b 0%, #0c1a0c 60%, #0e240c 100%);
+  overflow: hidden; /* el brillo del balón no se sale de la tarjeta */
 }
 
-/* Respiro vertical entre pill, título, subtítulo y botón del saludo.
-   Sin esto los labels quedan pegados uno tras otro. */
+/* Píldora "SearchMatch" arriba del título */
 .panel-hero .badge-listo {
-  display: inline-flex; /* la píldora mide solo su texto, no todo el ancho */
-  margin-bottom: 14px; /* aire antes del "Hola, ..." */
+  display: inline-flex; /* mide solo su texto */
+  margin-bottom: 16px;
 }
 
-/* Título con aire abajo y corte con "..." si el nombre es muy largo */
-.panel-hero .saludo-titulo {
-  margin-bottom: 10px; /* aire antes de "Jugador · Delantero" */
-  line-height: 1.15; /* evita que las letras se toquen entre líneas */
-  max-width: 100%; /* no empuja al balón fuera de la pantalla */
-  overflow: hidden; /* esconde lo que sobra */
-  white-space: nowrap; /* todo en una sola línea */
-  text-overflow: ellipsis; /* pone "..." al final */
+/* Título grande en dos líneas: la segunda en verde neón */
+.panel-hero-titulo {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+.panel-hero-titulo span {
+  display: block; /* "empieza aquí" baja a la segunda línea */
+  color: var(--neon);
 }
 
-/* Subtítulo separado del botón */
-.panel-hero .saludo-sub {
-  margin-bottom: 24px; /* aire antes de "Buscar partido" */
+/* Descripción en gris, angosta para que corte en dos líneas */
+.panel-hero-desc {
+  color: var(--gris-claro);
+  max-width: 340px;
+  margin-bottom: 24px;
 }
 
-/* Botón "Buscar partido" como píldora al contenido (no a todo el ancho),
-   con su flecha y el brillo verde de la referencia */
-.panel-hero .btn-buscar {
-  width: auto; /* solo mide lo que ocupa el texto + iconos */
-  padding: 14px 28px; /* forma de píldora grande */
-  border-radius: 999px; /* bordes totalmente redondos */
+/* Botón verde neón con esquinas redondeadas y flecha */
+.panel-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  background: var(--neon);
+  color: #0a0a0a; /* texto negro sobre el verde */
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--brillo); /* resplandor verde */
+  transition: transform 0.2s, box-shadow 0.2s; /* hover suave */
 }
+.panel-hero-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(57, 255, 20, 0.6);
+}
+.panel-hero-btn .material-symbols-outlined { font-size: 20px; }
 
-/* Pelota 3D del panel: reusa .ball-stage de styles.css (foco, anillo, HUD).
-   Aquí solo se ajusta el tamaño, grande como en la referencia. */
+/* Pelota 3D: reusa .ball-stage de styles.css; aquí solo el tamaño */
 .panel-hero .ball-stage {
-  order: 0; /* a la derecha del texto en desktop (en la landing va arriba en móvil) */
-  max-width: 270px; /* protagonista como en la referencia */
+  order: 0; /* a la derecha del texto */
+  max-width: 280px;
 }
 
 /* Barra informativa con acento verde a la izquierda, como la referencia */
@@ -183,10 +222,143 @@
   /* Las 2 columnas pasan a una sola */
   .panel-columnas { grid-template-columns: 1fr; }
   /* Texto arriba, balón 3D abajo y centrado */
-  .panel-hero { flex-direction: column; text-align: center; }
+  .panel-hero { flex-direction: column; text-align: center; padding: 24px 20px; }
   .panel-hero .ball-stage { max-width: 220px; }
+  .panel-hero-titulo { font-size: 1.9rem; }
+  .panel-hero-desc { margin-left: auto; margin-right: auto; }
   /* El botón ocupa todo el ancho para pulsarlo fácil con el dedo */
-  .panel-hero .btn-buscar { width: 100%; }
+  .panel-hero-btn { width: 100%; justify-content: center; }
   /* En pantallas chicas se oculta la decoración para dar espacio al texto */
   .panel-vacio::after { display: none; }
 }
+
+/* =========================================================
+   MENÚ LATERAL (sidebar) — solo en escritorio
+   En celular se oculta y se sigue usando el menú inferior.
+   ========================================================= */
+.sidebar {
+  display: none; /* oculto en celular */
+}
+
+@media (min-width: 960px) {
+  .sidebar {
+    position: fixed; /* fijo a la izquierda aunque se haga scroll */
+    top: 0;
+    left: 0;
+    bottom: 0; /* ocupa toda la altura de la pantalla */
+    width: 256px;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 16px 16px;
+    background: #0d0f0d;
+    border-right: 1px solid var(--borde-sutil);
+    z-index: 10;
+  }
+
+  /* El body deja libres los 256px del menú; el resto de la pantalla es para el contenido */
+  .dashboard-body { padding-left: 256px; }
+  /* El contenido usa todo ese espacio, hasta 1280px, y se centra en él */
+  .dashboard-body .dashboard-panel { max-width: 1280px; margin: 0 auto; padding: 32px; }
+  /* Con el menú lateral ya no hacen falta el menú inferior ni el logo del header */
+  .dashboard-body .bottom-nav { display: none; }
+  .dashboard-panel .dashboard-header .dashboard-logo { display: none; }
+  .dashboard-panel .cabecera-acciones { margin-left: auto; }
+}
+
+/* Logo en blanco con un punto verde que brilla */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 12px 32px;
+  color: var(--texto);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+}
+.sidebar-logo-punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 8px var(--neon);
+}
+
+/* Lista de opciones una debajo de otra */
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Opción inactiva: fondo transparente y texto gris */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  color: var(--gris-claro);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s; /* hover suave */
+}
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--texto);
+}
+
+/* Opción activa: borde verde neón brillante y texto/ícono en verde */
+.sidebar-item.activo {
+  color: var(--neon);
+  border-color: var(--neon);
+  background: linear-gradient(90deg, rgba(57, 255, 20, 0.1), rgba(57, 255, 20, 0.02));
+  box-shadow: 0 0 14px rgba(57, 255, 20, 0.35), inset 0 0 10px rgba(57, 255, 20, 0.08);
+}
+
+/* Tarjeta del usuario: margin-top auto la empuja al fondo del menú */
+.sidebar-usuario {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--borde-sutil);
+  border-radius: 14px;
+  background: #1a1a1a;
+  color: var(--texto);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.sidebar-usuario:hover { border-color: var(--neon-borde); }
+
+/* Avatar: círculo oscuro con anillo y letra verde (como la referencia) */
+.sidebar-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--neon);
+  border-radius: 50%;
+  color: var(--neon);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+/* Nombre y rol uno arriba del otro; el nombre largo se corta con "..." */
+.sidebar-usuario-datos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.sidebar-usuario-datos strong {
+  font-size: 0.9rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.sidebar-usuario-datos small { color: var(--gris); font-size: 0.75rem; }
+.sidebar-chevron { color: var(--gris); }

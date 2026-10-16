@@ -1,0 +1,34 @@
+<%
+  // Items del menú en un arreglo simple: para agregar uno nuevo basta con sumar una línea.
+  // "activo" llega desde la vista (ej. 'inicio') y marca en verde la opción de la página actual.
+  const items = [
+    { id: 'inicio',   texto: 'Inicio',   icono: 'home',           enlace: '/users/dashboard' },
+    { id: 'canchas',  texto: 'Canchas',  icono: 'stadium',        enlace: '#' },
+    { id: 'partidos', texto: 'Partidos', icono: 'calendar_month', enlace: '#' },
+    { id: 'perfil',   texto: 'Perfil',   icono: 'person',         enlace: '#' }
+  ];
+%>
+<!-- Menú lateral fijo a la izquierda (solo en escritorio; en celular se usa el menú inferior) -->
+<aside class="sidebar" aria-label="Menú principal">
+  <!-- Logo con punto verde brillante -->
+  <a href="/users/dashboard" class="sidebar-logo">SEARCH MATCH <span class="sidebar-logo-punto"></span></a>
+
+  <!-- Se recorre el arreglo y se dibuja un enlace por cada item -->
+  <nav class="sidebar-menu">
+    <% items.forEach((item) => { %>
+      <a href="<%= item.enlace %>" class="sidebar-item <%= item.id === activo ? 'activo' : '' %>">
+        <span class="material-symbols-outlined"><%= item.icono %></span><%= item.texto %>
+      </a>
+    <% }); %>
+  </nav>
+
+  <!-- Tarjeta del usuario abajo del todo -->
+  <a href="#" class="sidebar-usuario">
+    <span class="sidebar-avatar"><%= (usuario.nombre || 'J').charAt(0).toUpperCase() %></span>
+    <span class="sidebar-usuario-datos">
+      <strong><%= usuario.nombre %></strong>
+      <small>Jugador</small>
+    </span>
+    <span class="material-symbols-outlined sidebar-chevron">chevron_right</span>
+  </a>
+</aside>
