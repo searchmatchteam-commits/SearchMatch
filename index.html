@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <!-- Hace que el diseño se adapte al ancho del celular -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SearchMatch - Inicio</title>
+  <style>
+    /* ===== VARIABLES: aquí cambias los colores de toda la página ===== */
+    :root {
+      --fondo: #0b0e0b;        /* negro verdoso de la página */
+      --superficie: #141714;   /* gris oscuro de las tarjetas */
+      --borde: #242824;        /* borde gris de las tarjetas */
+      --verde: #39ff14;        /* verde neón principal */
+      --verde-suave: rgba(57, 255, 20, 0.12); /* fondo suave verde */
+      --texto: #ffffff;        /* texto blanco */
+      --texto-gris: #9aa39a;   /* texto gris secundario */
+      --radio: 12px;           /* redondeo estándar de tarjetas */
+    }
+
+    /* ===== RESET BÁSICO: quita márgenes que el navegador pone solo ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ===== CUERPO: fondo oscuro + letra simple del sistema ===== */
+    body {
+      background: var(--fondo); /* usa la variable de fondo */
+      color: var(--texto); /* todo el texto en blanco por defecto */
+      font-family: Arial, Helvetica, sans-serif; /* fuente del sistema, sin descargar nada */
+      padding-bottom: 110px; /* espacio abajo para que la barra fija no tape nada */
+    }
+
+    /* ===== CONTENEDOR: centra el contenido y le da ancho máximo ===== */
+    .contenedor {
+      max-width: 1100px; /* en desktop no se estira más que esto */
+      margin: 0 auto; /* lo centra horizontalmente */
+      padding: 0 16px; /* aire a los lados en móvil */
+    }
+
+    /* ===== HEADER: barra de arriba con logo y iconos ===== */
+    .header {
+      display: flex; /* pone logo a la izquierda e iconos a la derecha */
+      justify-content: space-between; /* separa los dos extremos */
+      align-items: center; /* los centra verticalmente */
+      padding: 14px 16px; /* aire arriba/abajo y lados */
+      border-bottom: 1px solid var(--borde); /* línea que separa del resto */
+      max-width: 1100px; /* mismo ancho que el contenido */
+      margin: 0 auto; /* centrado */
+    }
+
+    /* ===== LOGO: texto con parte en verde ===== */
+    .logo { font-weight: bold; letter-spacing: 1px; font-size: 15px; }
+    .logo span { color: var(--verde); } /* la palabra MATCH va en verde */
+
+    /* ===== ICONOS DEL HEADER: campana y avatar ===== */
+    .header-iconos { display: flex; gap: 12px; align-items: center; }
+    .icono-redondo {
+      width: 34px; height: 34px; /* círculo del mismo tamaño */
+      border: 1px solid var(--borde); /* borde gris fino */
+      border-radius: 50%; /* lo hace redondo */
+      display: flex; align-items: center; justify-content: center; /* centra el emoji */
+    }
+    .campana { position: relative; } /* para poder poner el punto verde encima */
+    .punto-verde {
+      position: absolute; top: 7px; right: 8px; /* esquina superior derecha */
+      width: 8px; height: 8px; /* puntito pequeño */
+      background: var(--verde); /* verde neón */
+      border-radius: 50%; /* redondo */
+    }
+
+    /* ===== HERO: saludo + balón lado a lado ===== */
+    .hero {
+      display: flex; /* texto a la izquierda, balón a la derecha */
+      justify-content: space-between; /* los separa */
+      align-items: center; /* los centra verticalmente */
+      gap: 20px; /* espacio entre texto y balón */
+      padding: 28px 0 20px; /* aire arriba y abajo */
+    }
+
+    /* ===== PÍLDORA: etiqueta "listo para jugar" ===== */
+    .pildora {
+      display: inline-block; /* solo ocupa lo que mide el texto */
+      background: var(--verde-suave); /* fondo verde muy suave */
+      color: var(--verde); /* texto verde */
+      font-size: 11px; font-weight: bold; letter-spacing: 1px;
+      padding: 6px 12px; /* forma de píldora */
+      border-radius: 20px; /* bordes bien redondos */
+      margin-bottom: 10px; /* separa del título */
+    }
+
+    /* ===== TÍTULO: "Hola, Ruperto" ===== */
+    .titulo { font-size: 38px; margin-bottom: 4px; }
+    .titulo span { color: var(--verde); } /* el nombre va en verde */
+    .subtitulo { color: var(--texto-gris); font-size: 14px; margin-bottom: 18px; }
+
+    /* ===== BOTÓN GRANDE VERDE: solo visual, no hace nada ===== */
+    .btn-grande {
+      display: inline-block; /* parece botón pero es un link falso */
+      background: var(--verde); /* fondo verde neón */
+      color: #061206; /* texto casi negro para que se lea */
+      font-weight: bold; text-decoration: none; /* sin subrayado */
+      padding: 12px 26px; /* tamaño grande */
+      border-radius: 20px; /* bien redondo como en la imagen */
+    }
+
+    /* ===== BALÓN: círculo con brillo (alternativa simple al 3D) ===== */
+    /* No se puede hacer el balón 3D solo con CSS, así que usamos */
+    /* un círculo oscuro con sombra verde + anillos. Da la misma idea. */
+    .balon {
+      width: 210px; height: 210px; /* círculo grande */
+      min-width: 210px; /* no se aplasta en pantallas chicas */
+      border-radius: 50%; /* lo hace círculo */
+      background: radial-gradient(circle at 35% 35%, #2a2f2a, #000); /* luz arriba-izq */
+      border: 2px solid var(--verde); /* borde verde */
+      box-shadow: 0 0 40px rgba(57,255,20,0.5); /* brillo verde alrededor */
+      display: flex; align-items: center; justify-content: center; /* centra la pelota */
+      font-size: 90px; /* tamaño del emoji ⚽ */
+    }
+
+    /* ===== BARRA INFO: "12 cupos..." ===== */
+    .barra-info {
+      display: flex; /* texto a la izquierda, link a la derecha */
+      justify-content: space-between; /* los separa */
+      align-items: center; /* centra verticalmente */
+      background: var(--superficie); /* fondo de tarjeta */
+      border: 1px solid var(--borde); /* borde gris */
+      border-left: 4px solid var(--verde); /* línea verde a la izquierda */
+      border-radius: var(--radio); /* esquinas redondas */
+      padding: 12px 16px; /* aire interno */
+      font-size: 13px; /* texto un poco chico */
+      margin-bottom: 24px; /* separa de la siguiente sección */
+    }
+    .link-verde { color: var(--verde); text-decoration: none; font-weight: bold; white-space: nowrap; }
+
+    /* ===== DOS COLUMNAS: canchas y equipos lado a lado ===== */
+    .columnas {
+      display: grid; /* rejilla de 2 columnas iguales */
+      grid-template-columns: 1fr 1fr; /* mitad y mitad */
+      gap: 24px; /* espacio entre columnas */
+      margin-bottom: 24px; /* separa de próximo partido */
+    }
+
+    /* ===== TÍTULO DE SECCIÓN: "Canchas disponibles" etc. ===== */
+    .seccion-titulo {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 17px; font-weight: bold;
+      margin-bottom: 12px; /* separa del listado */
+    }
+    .seccion-titulo small { font-size: 12px; font-weight: normal; }
+
+    /* ===== TARJETA: cada cancha o equipo ===== */
+    .tarjeta {
+      display: flex; /* foto a la izquierda, datos al medio, botón a la derecha */
+      align-items: center; /* centra todo verticalmente */
+      gap: 12px; /* espacio entre partes */
+      background: var(--superficie); /* fondo oscuro */
+      border: 1px solid var(--borde); /* borde gris */
+      border-radius: var(--radio); /* esquinas redondas */
+      padding: 12px; /* aire interno */
+      margin-bottom: 12px; /* separa una tarjeta de otra */
+    }
+
+    /* ===== FOTO PLACEHOLDER: rectángulo de color en vez de foto real ===== */
+    .foto {
+      width: 80px; height: 55px; /* tamaño tipo miniatura */
+      min-width: 80px; /* no se aplasta */
+      border-radius: 8px; /* esquinas redondas */
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: bold; color: #fff;
+    }
+    .foto-1 { background: #2e7d32; } /* verde cancha */
+    .foto-2 { background: #1565c0; } /* azul cancha techada */
+
+    /* ===== ESCUDO PLACEHOLDER: cuadradito oscuro con emoji ===== */
+    .escudo {
+      width: 44px; height: 44px; min-width: 44px;
+      background: #0b0e0b; /* casi negro */
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+
+    /* ===== TEXTOS DE LA TARJETA: nombre + detalle gris ===== */
+    .datos { flex: 1; } /* ocupa todo el espacio libre del medio */
+    .datos strong { display: block; font-size: 14px; margin-bottom: 3px; }
+    .datos p { color: var(--texto-gris); font-size: 12px; }
+
+    /* ===== PRECIO Y RATING: alineados a la derecha ===== */
+    .precio { text-align: right; font-size: 13px; font-weight: bold; white-space: nowrap; }
+    .rating { color: var(--verde); font-weight: normal; }
+
+    /* ===== BOTONES CHICOS: Reservar / Enviar solicitud ===== */
+    .btn-chico {
+      background: var(--verde-suave); /* fondo verde suave */
+      color: var(--verde); /* texto verde */
+      border: none; /* sin borde */
+      padding: 8px 12px; /* tamaño chico */
+      border-radius: 8px; /* redondo */
+      font-size: 12px; font-weight: bold;
+      white-space: nowrap; /* no se parte en dos líneas */
+    }
+    .btn-solido { background: var(--verde); color: #061206; } /* verde lleno */
+    .btn-apagado { background: #222; color: #ccc; font-weight: normal; } /* estado enviado */
+
+    /* ===== PRÓXIMO PARTIDO: tarjeta de estado vacío ===== */
+    .vacio {
+      display: flex; /* icono a la izquierda, texto al centro */
+      align-items: center; gap: 20px;
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      padding: 24px; /* más aire porque es una sola tarjeta grande */
+    }
+    .vacio-icono {
+      width: 60px; height: 60px; min-width: 60px;
+      border: 1px solid var(--borde); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; color: var(--texto-gris);
+    }
+    .vacio-texto { flex: 1; text-align: center; color: var(--texto-gris); font-size: 14px; }
+    .vacio-texto p { margin-bottom: 8px; }
+
+    /* ===== BARRA INFERIOR: menú fijo abajo ===== */
+    .nav-inferior {
+      position: fixed; /* siempre visible abajo aunque hagas scroll */
+      bottom: 16px; left: 50%; /* centrada horizontalmente */
+      transform: translateX(-50%); /* truco para centrar con fixed */
+      display: flex; /* 4 botones en fila */
+      gap: 30px; /* espacio entre botones */
+      background: #161916; /* fondo oscuro */
+      border: 1px solid var(--borde);
+      border-radius: 30px; /* forma de píldora grande */
+      padding: 10px 34px; /* aire interno */
+    }
+    .nav-item { text-align: center; font-size: 11px; color: var(--texto-gris); text-decoration: none; }
+    .nav-item div { font-size: 20px; } /* icono más grande que el texto */
+    .nav-item.activo { color: var(--verde); } /* el actual va en verde */
+
+    /* ===== RESPONSIVE: en celular todo se apila ===== */
+    /* Cuando la pantalla es angosta, las 2 columnas pasan a 1 */
+    /* y el hero pone el balón debajo del texto para que no se rompa. */
+    @media (max-width: 768px) {
+      .columnas { grid-template-columns: 1fr; } /* una sola columna */
+      .hero { flex-direction: column; text-align: center; } /* texto arriba, balón abajo */
+      .balon { width: 160px; height: 160px; min-width: 160px; font-size: 70px; }
+      .titulo { font-size: 30px; } /* título más chico en móvil */
+      .nav-inferior { width: 92%; justify-content: space-around; gap: 0; } /* ocupa casi todo */
+      .tarjeta { flex-wrap: wrap; } /* si no cabe, el botón baja */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER: logo + campana + avatar (solo visual) ===== -->
+  <header class="header">
+    <div class="logo">⚽ SEARCH<span>MATCH</span></div>
+    <div class="header-iconos">
+      <div class="icono-redondo campana">🔔<span class="punto-verde"></span></div>
+      <div class="icono-redondo">👤</div>
+    </div>
+  </header>
+
+  <!-- ===== CONTENIDO PRINCIPAL: todo lo del centro ===== -->
+  <main class="contenedor">
+
+    <!-- ===== HERO: saludo + botón + balón ===== -->
+    <section class="hero">
+      <div>
+        <div class="pildora">● LISTO PARA JUGAR</div>
+        <h1 class="titulo">Hola, <span>Ruperto</span></h1>
+        <p class="subtitulo">Jugador · Delantero</p>
+        <a class="btn-grande" href="#">⚽ Buscar partido →</a>
+      </div>
+      <!-- Balón placeholder: círculo con brillo en vez de imagen 3D -->
+      <div class="balon">⚽</div>
+    </section>
+
+    <!-- ===== BARRA INFO: avisa cuántos cupos hay cerca ===== -->
+    <div class="barra-info">
+      <span>⚽&nbsp; 12 cupos y partidos abiertos cerca de ti</span>
+      <a class="link-verde" href="#">Ver lista →</a>
+    </div>
+
+    <!-- ===== DOS COLUMNAS: canchas (izq) y equipos (der) ===== -->
+    <div class="columnas">
+
+      <!-- ===== COLUMNA CANCHAS: lista de 2 canchas ===== -->
+      <section>
+        <div class="seccion-titulo"><span>🏟️&nbsp; Canchas disponibles</span><a class="link-verde" href="#"><small>⚙ Filtrar</small></a></div>
+
+        <!-- Tarjeta cancha 1 -->
+        <div class="tarjeta">
+          <div class="foto foto-1">FOTO</div>
+          <div class="datos"><strong>Monumental</strong><p>📍 San Borja · Fútbol 7</p></div>
+          <div class="precio"><span class="rating">★ 4.9</span><br>$24.000/h</div>
+          <button class="btn-chico">Reservar</button>
+        </div>
+
+        <!-- Tarjeta cancha 2 -->
+        <div class="tarjeta">
+          <div class="foto foto-2">FOTO</div>
+          <div class="datos"><strong>El Diego</strong><p>📍 Surco · Futsal</p></div>
+          <div class="precio"><span class="rating">★ 4.8</span><br>$28.000/h</div>
+          <button class="btn-chico">Reservar</button>
+        </div>
+      </section>
+
+      <!-- ===== COLUMNA EQUIPOS: lista de 3 equipos ===== -->
+      <section>
+        <div class="seccion-titulo"><span>🛡️&nbsp; Equipos disponibles</span><a class="link-verde" href="#"><small>Ver todos →</small></a></div>
+
+        <!-- Tarjeta equipo 1 -->
+        <div class="tarjeta">
+          <div class="escudo">🛡️</div>
+          <div class="datos"><strong>Deportivo Recoleta</strong><p>Busca: Delantero · Intermedio</p></div>
+          <button class="btn-chico btn-solido">Enviar solicitud</button>
+        </div>
+
+        <!-- Tarjeta equipo 2 -->
+        <div class="tarjeta">
+          <div class="escudo">🛡️</div>
+          <div class="datos"><strong>Los Fantasmas F.C</strong><p>Busca: Mediocampista</p></div>
+          <button class="btn-chico btn-solido">Enviar solicitud</button>
+        </div>
+
+        <!-- Tarjeta equipo 3 (ya solicitada, botón apagado) -->
+        <div class="tarjeta">
+          <div class="escudo">🛡️</div>
+          <div class="datos"><strong>Furia Nocturna</strong><p>Busca: Delantero</p></div>
+          <button class="btn-chico btn-apagado">Solicitud enviada ✓</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== PRÓXIMO PARTIDO: estado vacío (sin partidos) ===== -->
+    <section>
+      <div class="seccion-titulo"><span>📅&nbsp; Próximo partido</span></div>
+      <div class="vacio">
+        <div class="vacio-icono">📅</div>
+        <div class="vacio-texto">
+          <p>Todavía no tienes partidos programados</p>
+          <a class="link-verde" href="#">Explorar partidos →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== NAV INFERIOR: menú fijo (solo visual) ===== -->
+  <nav class="nav-inferior">
+    <a class="nav-item activo" href="#"><div>🏠</div>Inicio</a>
+    <a class="nav-item" href="#"><div>🏟️</div>Canchas</a>
+    <a class="nav-item" href="#"><div>📅</div>Partidos</a>
+    <a class="nav-item" href="#"><div>👤</div>Perfil</a>
+  </nav>
+
+</body>
+</html>

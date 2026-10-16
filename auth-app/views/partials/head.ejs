@@ -12,4 +12,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
   <!-- Estilos propios -->
   <link rel="stylesheet" href="/css/styles.css">
+  <!-- Estilos extra de la página (ej. dashboard.css). Cada vista los pide sin escribir <link> en su EJS -->
+  <% const _estilos = (typeof styles !== 'undefined' && Array.isArray(styles)) ? styles : []; %>
+  <% _estilos.forEach((href) => { %>
+  <link rel="stylesheet" href="<%= href %>">
+  <% }); %>
+  <!-- Scripts de la página con defer (no bloquean el HTML). Ningún EJS lleva <script>: los pide aquí -->
+  <% const _scripts = (typeof scripts !== 'undefined' && Array.isArray(scripts)) ? scripts : []; %>
+  <% _scripts.forEach((s) => { %>
+  <% if (typeof s === 'string') { %>
+  <script defer src="<%= s %>"></script>
+  <% } else if (s.type === 'module') { %>
+  <script defer type="module" src="<%= s.src %>"></script>
+  <% } else { %>
+  <script defer src="<%= s.src %>"></script>
+  <% } %>
+  <% }); %>
 </head>

@@ -1,0 +1,27 @@
+<!-- Saludo + balón: texto a la izquierda, balón decorativo a la derecha -->
+<section class="panel-hero">
+  <div>
+    <span class="badge-listo"><span class="punto-verde"></span>Listo para jugar</span>
+    <h1 class="saludo-titulo">Hola, <span class="icono-verde"><%= usuario.nombre %></span></h1>
+    <p class="saludo-sub">Jugador · <%= usuario.posicion %></p>
+    <!-- Etapa 2: solo visual, no busca de verdad todavía -->
+    <a href="#" class="btn-buscar">
+      <span class="material-symbols-outlined">sports_soccer</span>Buscar partido<span class="material-symbols-outlined">arrow_forward</span>
+    </a>
+  </div>
+  <!-- Pelota 3D: el mismo componente de la landing (ver /js/ball.js).
+       ball.js dibuja dentro de #ball-canvas; los estilos (.ball-stage, etc.)
+       ya están en styles.css y sirven para cualquier página. -->
+  <div class="ball-stage">
+    <div class="ball-foco"></div>
+    <div class="ball-anillo"></div>
+    <div id="ball-canvas" aria-hidden="true"></div>
+    <!-- Velocidad del remate (la actualiza ball.js) -->
+    <div class="ball-hud" aria-hidden="true">
+      <span class="ball-hud-titulo">Remate</span>
+      <strong><span class="ball-hud-vel">0</span> km/h</strong>
+      <small>Récord <span class="ball-hud-record">0</span> km/h</small>
+    </div>
+    <p class="ball-pista"><span class="material-symbols-outlined">touch_app</span>Arrastra para girar · toca para rematar</p>
+  </div>
+</section>

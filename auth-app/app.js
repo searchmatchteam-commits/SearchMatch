@@ -36,6 +36,12 @@ app.use(flash());
 // Rutas de autenticación (/login, /logout)
 app.use(require('./routes/auth'));
 
+// Panel principal (/users/dashboard): requiere sesión
+app.use('/users', require('./routes/dashboard'));
+
+// Atajo: /dashboard redirige a /users/dashboard
+app.get('/dashboard', (req, res) => res.redirect('/users/dashboard'));
+
 // Landing page (user es null si nadie ha iniciado sesión)
 app.get('/', (req, res) => {
   res.render('home', { user: req.session.user || null });

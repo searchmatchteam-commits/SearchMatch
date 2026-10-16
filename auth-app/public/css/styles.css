@@ -222,6 +222,142 @@ h2 {
   color: var(--neon);
 }
 
+/* =========================================================
+   INPUTS DEL LOGIN (.input-group) — caja oscura con icono integrado
+   Solo CSS plano, sin frameworks. Cada regla va comentada.
+   ========================================================= */
+
+/* Contenedor único para icono + input (+ botón ojo): comparten fondo y borde */
+/* para que se vean como una sola pieza, con esquinas redondeadas de 8px. */
+.input-group {
+  display: flex; /* pone icono e input en una sola fila */
+  align-items: center; /* centra verticalmente icono e input */
+  gap: 12px; /* separa el icono del texto sin romper la pieza visual */
+  padding: 0 14px; /* aire lateral; el input pone su propio alto con padding vertical */
+  margin-bottom: 20px; /* separa un campo del siguiente */
+  background: #1e1e1e; /* fondo oscuro, un poco más claro que el fondo #121212 para distinguirlo */
+  border: 1px solid #333; /* borde sutil en estado normal */
+  border-radius: 8px; /* esquinas redondeadas, coherentes con botones y UI */
+  color: #888; /* color base de los iconos: gris medio que no compite con el texto */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease; /* transición suave al enfocar */
+}
+
+/* Al pasar el mouse se mantiene el fondo oscuro (nunca blanco) */
+/* y solo se aclara un poco el borde para dar retroalimentación. */
+.input-group:hover {
+  background: #1e1e1e; /* reafirma el fondo oscuro en hover */
+  border-color: #4a4a4a; /* borde apenas más visible, sin usar verde todavía */
+}
+
+/* Cuando cualquier hijo (input o botón ojo) recibe el foco, */
+/* el borde se vuelve verde neón y aparece un glow suave. */
+.input-group:focus-within {
+  border-color: #39ff14; /* borde verde neón en focus */
+  box-shadow: 0 0 0 2px rgba(57, 255, 20, 0.2); /* glow suave alrededor de la caja */
+  color: #39ff14; /* los iconos heredan este verde al enfocar */
+}
+
+/* El input ocupa el espacio libre y no dibuja caja propia, */
+/* así icono e input comparten el mismo fondo del contenedor. */
+.input-group input {
+  flex: 1; /* el input crece y empuja el ojo hacia la derecha */
+  min-width: 0; /* permite que el flex se encoja sin desbordar en pantallas angostas */
+  padding: 14px 0; /* alto táctil cómodo sin padding lateral (ya lo da el contenedor) */
+  background: transparent; /* transparente para que se vea el #1e1e1e del contenedor */
+  background-color: transparent; /* refuerzo: nunca fondo blanco en estado normal */
+  border: none; /* sin borde propio: el borde lo dibuja el contenedor */
+  outline: none; /* sin outline del navegador: el focus visible lo da el contenedor */
+  color: #f0f0f0; /* texto claro (blanco roto), legible sobre fondo oscuro */
+  caret-color: #39ff14; /* cursor de escritura en verde neón para coherencia */
+  font-family: 'Montserrat', sans-serif; /* misma tipografía del resto del formulario */
+  font-size: 15px; /* tamaño legible en móvil y escritorio */
+}
+
+/* El input también permanece transparente en hover y focus, */
+/* para que ningún estado muestre fondo blanco. */
+.input-group input:hover,
+.input-group input:focus {
+  background: transparent; /* conserva el fondo oscuro del contenedor */
+  background-color: transparent; /* refuerzo contra estilos de agente de usuario */
+}
+
+/* Placeholder en gris medio: orienta sin competir con el texto real. */
+.input-group input::placeholder {
+  color: #888; /* gris medio sobre fondo oscuro */
+  opacity: 1; /* Firefox atenúa placeholders por defecto; esto lo deja legible */
+}
+
+/* Compatibilidad con Firefox antiguo para el placeholder. */
+.input-group input::-moz-placeholder {
+  color: #888; /* mismo gris medio del placeholder estándar */
+  opacity: 1; /* evita que Firefox lo muestre semitransparente */
+}
+
+/* Los iconos (sobre, candado, ojo) no se encogen y heredan el color del contenedor, */
+/* por eso se tiñen de verde automáticamente en :focus-within. */
+.input-group .material-symbols-outlined {
+  flex-shrink: 0; /* el icono nunca se aplasta aunque falte espacio */
+  font-size: 22px; /* tamaño equilibrado respecto al texto de 15px */
+}
+
+/* Botón del ojo: sin fondo ni borde propios para fundirse con la caja, */
+/* hereda el color del contenedor y es clickeable. */
+.input-group .btn-ojo {
+  display: flex; /* centra el icono del ojo */
+  align-items: center; /* centra verticalmente el icono */
+  padding: 4px; /* área táctil un poco mayor sin agrandar la caja */
+  margin-right: -4px; /* compensa el padding para alinearlo al borde derecho */
+  background: transparent; /* mismo fondo que la caja: parece una sola pieza */
+  background-color: transparent; /* refuerzo: nunca fondo blanco */
+  border: none; /* sin borde propio */
+  color: inherit; /* hereda el gris del contenedor (y el verde en focus) */
+  cursor: pointer; /* indica que es clickeable */
+  transition: color 0.2s ease; /* el cambio a verde en hover no es brusco */
+}
+
+/* Al pasar el mouse, el ojo se vuelve verde neón para invitar al clic. */
+.input-group .btn-ojo:hover {
+  background: transparent; /* mantiene el fondo oscuro en hover */
+  background-color: transparent; /* refuerzo: nunca fondo blanco */
+  color: #39ff14; /* verde neón en hover */
+}
+
+/* Focus visible con teclado: anillo verde para accesibilidad, */
+/* sin cambiar el fondo oscuro. */
+.input-group .btn-ojo:focus-visible {
+  outline: 2px solid #39ff14; /* anillo de foco claramente visible */
+  outline-offset: 2px; /* separa el anillo del icono para que se distinga */
+  color: #39ff14; /* icono en verde mientras tiene el foco */
+}
+
+/* Autofill de Chrome/Edge: el navegador pinta de blanco o amarillo */
+/* los campos autocompletados; este truco lo devuelve al modo oscuro. */
+.input-group input:-webkit-autofill,
+.input-group input:-webkit-autofill:hover,
+.input-group input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f0f0f0; /* texto autocompletado en blanco roto */
+  caret-color: #f0f0f0; /* cursor legible sobre fondo oscuro */
+  -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset; /* tapa el fondo claro con el oscuro */
+  box-shadow: 0 0 0 1000px #1e1e1e inset; /* versión estándar del mismo truco */
+  transition: background-color 9999s ease-in-out 0s; /* congela el fondo oscuro */
+}
+
+/* Autofill de Firefox: mantiene texto claro sobre fondo oscuro. */
+.input-group input:autofill {
+  background: #1e1e1e; /* fondo oscuro en autocompletado */
+  background-color: #1e1e1e; /* refuerzo para Firefox */
+  color: #f0f0f0; /* texto claro legible */
+  box-shadow: 0 0 0 1000px #1e1e1e inset; /* tapa cualquier fondo claro del navegador */
+}
+
+/* Respeta a usuarios que prefieren menos movimiento: sin transiciones. */
+@media (prefers-reduced-motion: reduce) {
+  .input-group,
+  .input-group .btn-ojo {
+    transition: none; /* elimina animaciones de borde y color */
+  }
+}
+
 /* Tarjeta del formulario de registro */
 .auth-card {
   padding: 24px 20px;

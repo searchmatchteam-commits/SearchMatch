@@ -1,0 +1,28 @@
+<%- include('partials/head', { titulo: 'Mi panel', descripcion: 'Tu panel en SearchMatch: canchas, equipos y próximos partidos.', styles: ['/css/dashboard.css'], scripts: [{ src: '/js/ball.js', type: 'module' }] }) %>
+<body class="dashboard-body">
+
+  <!-- Panel principal: el controlador entrega usuario, cupos, canchas y equipos -->
+  <main class="dashboard dashboard-panel">
+    <!-- Barra superior con logo y accesos -->
+    <%- include('partials/dashboard/_header', { usuario }) %>
+
+    <!-- Saludo + balón + botón buscar -->
+    <%- include('partials/dashboard/_hero', { usuario }) %>
+
+    <!-- Aviso de cupos cerca de ti -->
+    <%- include('partials/dashboard/_info-bar', { cupos }) %>
+
+    <!-- Dos columnas: canchas y equipos lado a lado en desktop -->
+    <div class="panel-columnas">
+      <%- include('partials/dashboard/_canchas', { canchas }) %>
+      <%- include('partials/dashboard/_equipos', { equipos }) %>
+    </div>
+
+    <!-- Estado vacío de próximos partidos -->
+    <%- include('partials/dashboard/_proximo') %>
+  </main>
+
+  <!-- Menú inferior fijo (sin <script> en el EJS: ball.js se carga con defer desde partials/head) -->
+  <%- include('partials/dashboard/_nav') %>
+</body>
+</html>

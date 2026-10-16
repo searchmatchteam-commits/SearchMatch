@@ -1,0 +1,25 @@
+<!-- Columna de equipos: el controlador entrega el arreglo "equipos" -->
+<section class="seccion">
+  <div class="seccion-header">
+    <h2 class="seccion-titulo panel-seccion-titulo"><span class="material-symbols-outlined icono-verde">group</span>Equipos disponibles</h2>
+    <a href="#" class="link-verde link-flecha">Ver todos <span class="material-symbols-outlined">arrow_forward</span></a>
+  </div>
+
+  <% equipos.forEach((e) => { %>
+  <article class="card-item">
+    <div class="card-icono" aria-hidden="true">
+      <span class="material-symbols-outlined icono-verde">shield</span>
+    </div>
+    <div class="card-info">
+      <p class="card-nombre"><%= e.nombre %></p>
+      <p class="card-detalle">Busca: <%= e.busca %></p>
+    </div>
+    <!-- Según el estado se muestra un botón u otro (etapa 2: solo visual) -->
+    <% if (e.estado === 'enviada') { %>
+      <span class="btn-enviada">Solicitud enviada ✓</span>
+    <% } else { %>
+      <a href="#" class="btn-solicitud">Enviar solicitud</a>
+    <% } %>
+  </article>
+  <% }); %>
+</section>

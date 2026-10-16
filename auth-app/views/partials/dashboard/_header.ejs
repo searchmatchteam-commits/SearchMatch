@@ -1,0 +1,12 @@
+<!-- Barra superior del panel: logo a la izquierda, campana y avatar a la derecha -->
+<header class="dashboard-header">
+  <%- include('../marca', { enlace: '/users/dashboard' }) %>
+  <div class="cabecera-acciones">
+    <!-- Campana de notificaciones con punto verde (etapa 2: solo visual) -->
+    <a href="#" class="campana" aria-label="Notificaciones">
+      <span class="material-symbols-outlined">notifications</span><span class="punto-verde"></span>
+    </a>
+    <!-- Avatar del usuario: muestra su inicial -->
+    <a href="#" class="avatar" aria-label="Mi perfil"><%= (usuario.nombre || 'J').charAt(0).toUpperCase() %></a>
+  </div>
+</header>

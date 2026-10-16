@@ -1,0 +1,192 @@
+/* =========================================================
+   PANEL PRINCIPAL (dashboard) — estilos propios de esta página
+   Reusa las variables de styles.css (:root). Esta hoja solo se
+   carga en el panel, así que todo lo de aquí no afecta al resto.
+   ========================================================= */
+
+/* Fondo con ambiente verde como la referencia: un resplandor arriba
+   a la derecha, otro abajo a la izquierda y otro abajo a la derecha,
+   sobre el negro base. Solo son luces, no agregan peso. */
+.dashboard-body {
+  background:
+    radial-gradient(ellipse 55% 30% at 85% 0%, rgba(57, 255, 20, 0.09), transparent 70%),
+    radial-gradient(ellipse 35% 25% at 0% 100%, rgba(57, 255, 20, 0.07), transparent 70%),
+    radial-gradient(ellipse 35% 25% at 100% 100%, rgba(57, 255, 20, 0.06), transparent 70%),
+    var(--fondo);
+}
+
+/* Contenido del panel: hereda .dashboard de styles.css (ancho móvil).
+   Aquí solo ampliamos el ancho en pantallas grandes. */
+@media (min-width: 960px) {
+  /* En escritorio el panel usa más ancho que el login */
+  .dashboard-panel { max-width: 1080px; }
+}
+
+/* Header con línea inferior verde tenue, como la referencia */
+.dashboard-panel .dashboard-header {
+  padding-bottom: 14px; /* aire antes de la línea */
+  border-bottom: 1px solid rgba(57, 255, 20, 0.18); /* línea verde sutil */
+  margin-bottom: 20px; /* separa del saludo */
+}
+
+/* Avatar con anillo verde sólido (en vez del borde punteado gris) */
+.dashboard-panel .avatar {
+  border: 2px solid var(--neon); /* anillo verde como la referencia */
+  color: var(--texto);
+  font-weight: 800;
+}
+
+/* Punto verde en la campana: avisa que hay notificaciones */
+.dashboard-panel .campana .punto-verde {
+  position: absolute; /* esquina superior derecha de la campana */
+  top: 6px;
+  right: 7px;
+  width: 8px;
+  height: 8px;
+  background: var(--neon);
+  border-radius: 50%;
+}
+
+/* Saludo con balón al lado: texto a la izquierda, balón a la derecha */
+.panel-hero {
+  display: flex; /* pone texto y balón en una fila */
+  justify-content: space-between; /* los separa a los extremos */
+  align-items: center; /* los centra verticalmente */
+  gap: 20px; /* aire entre texto y balón */
+  margin-bottom: 20px; /* separa de la barra informativa */
+}
+
+/* Respiro vertical entre pill, título, subtítulo y botón del saludo.
+   Sin esto los labels quedan pegados uno tras otro. */
+.panel-hero .badge-listo {
+  display: inline-flex; /* la píldora mide solo su texto, no todo el ancho */
+  margin-bottom: 14px; /* aire antes del "Hola, ..." */
+}
+
+/* Título con aire abajo y corte con "..." si el nombre es muy largo */
+.panel-hero .saludo-titulo {
+  margin-bottom: 10px; /* aire antes de "Jugador · Delantero" */
+  line-height: 1.15; /* evita que las letras se toquen entre líneas */
+  max-width: 100%; /* no empuja al balón fuera de la pantalla */
+  overflow: hidden; /* esconde lo que sobra */
+  white-space: nowrap; /* todo en una sola línea */
+  text-overflow: ellipsis; /* pone "..." al final */
+}
+
+/* Subtítulo separado del botón */
+.panel-hero .saludo-sub {
+  margin-bottom: 24px; /* aire antes de "Buscar partido" */
+}
+
+/* Botón "Buscar partido" como píldora al contenido (no a todo el ancho),
+   con su flecha y el brillo verde de la referencia */
+.panel-hero .btn-buscar {
+  width: auto; /* solo mide lo que ocupa el texto + iconos */
+  padding: 14px 28px; /* forma de píldora grande */
+  border-radius: 999px; /* bordes totalmente redondos */
+}
+
+/* Pelota 3D del panel: reusa .ball-stage de styles.css (foco, anillo, HUD).
+   Aquí solo se ajusta el tamaño, grande como en la referencia. */
+.panel-hero .ball-stage {
+  order: 0; /* a la derecha del texto en desktop (en la landing va arriba en móvil) */
+  max-width: 270px; /* protagonista como en la referencia */
+}
+
+/* Barra informativa con acento verde a la izquierda, como la referencia */
+.dashboard-panel .info-bar {
+  border-left: 3px solid var(--neon); /* línea verde al borde izquierdo */
+}
+
+/* Títulos de sección con icono verde delante, como la referencia */
+.panel-seccion-titulo {
+  display: flex; /* icono + texto en una fila */
+  align-items: center; /* centrados verticalmente */
+  gap: 8px; /* aire entre icono y texto */
+}
+
+/* Dos columnas: canchas a la izquierda, equipos a la derecha */
+.panel-columnas {
+  display: grid; /* rejilla simple */
+  grid-template-columns: 1fr 1fr; /* mitad y mitad en desktop */
+  gap: 24px; /* aire entre columnas */
+  margin-bottom: 28px; /* separa de "Próximo partido" */
+}
+
+/* Foto de la cancha: miniatura con degradado de cancha nocturna.
+   Cuando haya fotos reales se usa <img> con la misma clase y tamaño. */
+.cancha-foto {
+  width: 80px; /* miniatura */
+  height: 55px;
+  min-width: 80px; /* no se aplasta */
+  border-radius: 8px; /* esquinas redondas */
+  display: flex;
+  align-items: center; /* centra el icono */
+  justify-content: center;
+  font-size: 24px; /* tamaño del emoji 🏟️ */
+  background: linear-gradient(180deg, #0a1a2f 0%, #1b4d2e 60%, #2e7d32 100%); /* cielo noche -> pasto */
+  border: 1px solid var(--borde-sutil); /* borde fino como las tarjetas */
+}
+
+/* "Próximo partido" vacío en horizontal: icono | texto | decoración,
+   como la referencia (icono a la izquierda, texto al centro). */
+.panel-vacio {
+  display: flex; /* todo en una fila */
+  align-items: center; /* centrado vertical */
+  gap: 20px;
+  padding: 24px; /* aire generoso */
+  overflow: hidden; /* la decoración de la derecha no genera scroll */
+  position: relative; /* para ubicar la decoración */
+}
+
+/* Separador vertical entre el icono y el texto */
+.panel-vacio-icono {
+  padding-right: 20px; /* aire antes de la línea */
+  border-right: 1px solid var(--borde-sutil); /* línea divisoria */
+  color: var(--gris); /* icono en gris apagado */
+}
+
+/* Texto centrado ocupando el espacio libre */
+.panel-vacio-texto {
+  flex: 1; /* ocupa todo el medio */
+  text-align: center; /* centrado como la referencia */
+  color: var(--gris-claro);
+  font-size: 14px;
+}
+
+/* Decoración de cancha a la derecha: líneas verdes tenues con CSS puro.
+   Es solo ambiente; si molesta se borra sin afectar nada. */
+.panel-vacio::after {
+  content: ""; /* sin texto, solo dibujo */
+  position: absolute; /* pegada a la derecha */
+  top: -20px;
+  right: -30px;
+  width: 220px;
+  height: 160px;
+  background:
+    linear-gradient(rgba(57, 255, 20, 0.14) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(90deg, rgba(57, 255, 20, 0.14) 1px, transparent 1px) 0 0 / 28px 28px;
+  transform: perspective(300px) rotateX(30deg) rotateZ(-8deg); /* efecto de piso en perspectiva */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 40%); /* se difumina a la izquierda */
+  mask-image: linear-gradient(90deg, transparent, #000 40%);
+  pointer-events: none; /* no bloquea clics */
+}
+
+/* Item activo del menú inferior con resplandor verde, como la referencia */
+.bottom-nav .nav-item.activo {
+  color: var(--neon); /* icono y texto en verde */
+  text-shadow: 0 0 12px rgba(57, 255, 20, 0.6); /* brillo suave */
+}
+
+/* En celular todo se apila: columnas a 1 y balón debajo del texto */
+@media (max-width: 768px) {
+  /* Las 2 columnas pasan a una sola */
+  .panel-columnas { grid-template-columns: 1fr; }
+  /* Texto arriba, balón 3D abajo y centrado */
+  .panel-hero { flex-direction: column; text-align: center; }
+  .panel-hero .ball-stage { max-width: 220px; }
+  /* El botón ocupa todo el ancho para pulsarlo fácil con el dedo */
+  .panel-hero .btn-buscar { width: 100%; }
+  /* En pantallas chicas se oculta la decoración para dar espacio al texto */
+  .panel-vacio::after { display: none; }
+}

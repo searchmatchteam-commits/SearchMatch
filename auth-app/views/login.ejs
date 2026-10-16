@@ -1,4 +1,4 @@
-<%- include('partials/head', { titulo: 'Iniciar sesión', descripcion: 'Inicia sesión en SearchMatch para encontrar partidos, equipos y canchas.' }) %>
+<%- include('partials/head', { titulo: 'Iniciar sesión', descripcion: 'Inicia sesión en SearchMatch para encontrar partidos, equipos y canchas.', scripts: ['/js/auth-form.js'] }) %>
 <body class="auth-body auth-pagina">
 
   <%- include('partials/auth-nav', { accion: 'register' }) %>
@@ -20,14 +20,14 @@
 
       <form class="auth-form" action="/login" method="POST" id="form-auth"
             data-texto="INICIAR SESIÓN" data-texto-cargando="INGRESANDO...">
-        <!-- Inputs de solo línea inferior; el aria-label reemplaza a la etiqueta visible -->
-        <div class="campo-linea">
+        <!-- Inputs en caja oscura (.input-group): icono + input comparten fondo y borde -->
+        <div class="input-group">
           <span class="material-symbols-outlined">mail</span>
           <input type="email" name="correo" value="<%= correo %>" aria-label="Correo electrónico"
                  placeholder="Correo electrónico" autocomplete="email" required autofocus>
         </div>
 
-        <div class="campo-linea">
+        <div class="input-group">
           <span class="material-symbols-outlined">lock</span>
           <input type="password" id="contrasena" name="contrasena" aria-label="Contraseña"
                  placeholder="Contraseña" autocomplete="current-password" required>
@@ -54,6 +54,6 @@
     </section>
   </main>
 
-  <script src="/js/auth-form.js"></script>
+  <!-- Sin <script> en el EJS: auth-form.js se carga con defer desde partials/head -->
 </body>
 </html>

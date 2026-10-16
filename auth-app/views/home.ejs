@@ -1,4 +1,4 @@
-<%- include('partials/head', { titulo: 'Encuentra tu partido', descripcion: 'SearchMatch conecta jugadores, equipos y canchas para organizar tus pichangas en un solo lugar.' }) %>
+<%- include('partials/head', { titulo: 'Encuentra tu partido', descripcion: 'SearchMatch conecta jugadores, equipos y canchas para organizar tus pichangas en un solo lugar.', scripts: ['/js/recovery-redirect.js', { src: '/js/ball.js', type: 'module' }] }) %>
 <body class="landing-body">
 
   <!-- 1. Barra superior: marca y accesos -->
@@ -115,13 +115,6 @@
   <!-- 6. Pie de página -->
   <%- include('partials/footer') %>
 
-  <script>
-    // Si Supabase manda el enlace de recuperación a la portada (cuando /reset-password no está
-    // en sus "Redirect URLs"), lo reenviamos a la página correcta con los tokens
-    if (location.hash.includes('type=recovery')) {
-      location.replace('/reset-password' + location.hash);
-    }
-  </script>
-  <script type="module" src="/js/ball.js"></script>
+  <!-- Sin <script> en el EJS: recovery-redirect.js y ball.js se cargan con defer desde partials/head -->
 </body>
 </html>

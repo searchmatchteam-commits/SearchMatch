@@ -1,4 +1,4 @@
-<%- include('partials/head', { titulo: 'Crear cuenta', descripcion: 'Crea tu cuenta en SearchMatch y empieza a jugar.' }) %>
+<%- include('partials/head', { titulo: 'Crear cuenta', descripcion: 'Crea tu cuenta en SearchMatch y empieza a jugar.', scripts: ['/js/auth-form.js'] }) %>
 <body class="auth-body-registro auth-pagina">
 
   <%- include('partials/auth-nav', { accion: 'login' }) %>
@@ -89,6 +89,6 @@
     </section>
   </main>
 
-  <script src="/js/auth-form.js"></script>
+  <!-- Sin <script> en el EJS: auth-form.js se carga con defer desde partials/head -->
 </body>
 </html>

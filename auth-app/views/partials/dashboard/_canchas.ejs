@@ -1,0 +1,24 @@
+<!-- Columna de canchas: el controlador entrega el arreglo "canchas" -->
+<section class="seccion">
+  <div class="seccion-header">
+    <h2 class="seccion-titulo panel-seccion-titulo"><span class="material-symbols-outlined icono-verde">stadium</span>Canchas disponibles</h2>
+    <a href="#" class="btn-filtrar"><span class="material-symbols-outlined">tune</span>Filtrar</a>
+  </div>
+
+  <% canchas.forEach((c) => { %>
+  <article class="card-item">
+    <!-- Foto placeholder con degradado de cancha nocturna (luego será <img> real) -->
+    <div class="cancha-foto" aria-hidden="true">🏟️</div>
+    <div class="card-info">
+      <p class="card-nombre"><%= c.nombre %></p>
+      <p class="card-detalle"><%= c.comuna %> · <%= c.modalidad %></p>
+    </div>
+    <div class="card-cancha-datos">
+      <span class="rating"><span class="material-symbols-outlined icono-estrella">star</span><%= c.rating %></span>
+      <span class="precio">$<%= c.precio %>/h</span>
+    </div>
+    <!-- Etapa 2: solo visual, aún no reserva de verdad -->
+    <a href="#" class="btn-reservar">Reservar</a>
+  </article>
+  <% }); %>
+</section>
