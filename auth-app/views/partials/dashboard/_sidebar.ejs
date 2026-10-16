@@ -31,4 +31,11 @@
     </span>
     <span class="material-symbols-outlined sidebar-chevron">chevron_right</span>
   </a>
+
+  <!-- Cerrar sesión: es un formulario POST (un simple enlace GET podría dispararse sin querer) -->
+  <form action="/logout" method="POST">
+    <button type="submit" class="sidebar-salir">
+      <span class="material-symbols-outlined">logout</span>Cerrar sesión
+    </button>
+  </form>
 </aside>

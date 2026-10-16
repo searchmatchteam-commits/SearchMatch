@@ -8,5 +8,11 @@
     </a>
     <!-- Avatar del usuario: muestra su inicial -->
     <a href="#" class="avatar" aria-label="Mi perfil"><%= (usuario.nombre || 'J').charAt(0).toUpperCase() %></a>
+    <!-- Cerrar sesión en celular (en escritorio está en el menú lateral) -->
+    <form action="/logout" method="POST" class="cabecera-salir">
+      <button type="submit" class="campana" aria-label="Cerrar sesión" title="Cerrar sesión">
+        <span class="material-symbols-outlined">logout</span>
+      </button>
+    </form>
   </div>
 </header>

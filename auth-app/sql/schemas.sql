@@ -102,9 +102,13 @@ CREATE TABLE jugador (
     nombre_apodo VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     id_usuario INTEGER NOT NULL UNIQUE,
+    id_nivel INTEGER,  -- nivel que el jugador elige en el registro (perfil deportivo)
     CONSTRAINT fk_jugador_usuario
         FOREIGN KEY (id_usuario)
         REFERENCES usuario(id),
+    CONSTRAINT fk_jugador_nivel
+        FOREIGN KEY (id_nivel)
+        REFERENCES nivel(id),
     CHECK (altura IS NULL OR altura > 0),
     CHECK (peso IS NULL OR peso > 0)
 );

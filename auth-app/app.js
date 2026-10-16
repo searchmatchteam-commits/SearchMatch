@@ -18,6 +18,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
 // Sesiones: guardan quién inició sesión mediante una cookie firmada
+if (!process.env.SESSION_SECRET) {
+  console.error('[Session] Falta SESSION_SECRET en .env. Genera uno con: node -e "console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))"');
+}
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -36,6 +39,9 @@ app.use(flash());
 // Rutas de autenticación (/login, /logout)
 app.use(require('./routes/auth'));
 
+// Onboarding (/onboarding): rol + perfil de jugador antes del panel
+app.use(require('./routes/onboarding'));
+
 // Panel principal (/users/dashboard): requiere sesión
 app.use('/users', require('./routes/dashboard'));
 
@@ -45,6 +51,19 @@ app.get('/dashboard', (req, res) => res.redirect('/users/dashboard'));
 // Landing page (user es null si nadie ha iniciado sesión)
 app.get('/', (req, res) => {
   res.render('home', { user: req.session.user || null });
+});
+
+// Ruta de prueba: http://localhost:3000/test-supabase
+// Devuelve OK si la SERVICE_ROLE_KEY conecta con la tabla 'usuario'
+app.get('/test-supabase', async (req, res) => {
+  try {
+    const supabase = require('./config/db');
+    const { data, error } = await supabase.from('usuario').select('id').limit(1);
+    if (error) return res.status(500).json({ ok: false, mensaje: error.message });
+    return res.json({ ok: true, mensaje: 'Conexión a Supabase OK', filas: data?.length ?? 0 });
+  } catch (e) {
+    return res.status(500).json({ ok: false, mensaje: e.message });
+  }
 });
 
 // Iniciar servidor y probar la conexión a Supabase

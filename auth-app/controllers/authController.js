@@ -99,7 +99,9 @@ async function handleLogin(req, res) {
     req.session.user = {
       id: usuario.id,
       correo: usuario.correo,
-      rol: usuario.id_rol_aplicacion
+      rol: usuario.id_rol_aplicacion,
+      // La fecha del registro, para dejarla escrita en el onboarding
+      fechaNacimiento: (data.user.user_metadata && data.user.user_metadata.fecha_nacimiento) || null
     };
     req.session.save(() => res.redirect('/'));
   });
@@ -163,11 +165,15 @@ async function handleRegister(req, res) {
     .from('rol_aplicacion')
     .select('id')
     .eq('nombre', 'usuario')
-    .single();
+    .maybeSingle();
 
   if (errorRol) {
-    console.error('Falta el rol "usuario" (ver sql/seeds.sql):', errorRol.message);
+    console.error('Error al buscar el rol "usuario":', errorRol.message);
     return fallar('No pudimos crear tu cuenta. Inténtalo de nuevo.');
+  }
+  if (!rol) {
+    console.error('Falta el rol "usuario" (ver sql/seeds.sql): tabla rol_aplicacion vacía');
+    return fallar('Falta configuración inicial (rol "usuario"). Ejecuta sql/seeds.sql en Supabase.');
   }
 
   // 3. Supabase Auth crea la cuenta y guarda la contraseña.
@@ -306,11 +312,13 @@ async function handleReset(req, res) {
 
 // ===================== LOGOUT =====================
 
-// POST /logout: cierra la sesión
+// POST /logout: cierra la sesión.
+// Con siguiente=login va al login (ej. "¿Ya tienes cuenta?" del onboarding para cambiar de cuenta)
 function logout(req, res) {
+  const destino = req.body && req.body.siguiente === 'login' ? '/login' : '/';
   req.session.destroy(() => {
     res.clearCookie('connect.sid');
-    res.redirect('/');
+    res.redirect(destino);
   });
 }
 
@@ -318,5 +326,6 @@ module.exports = {
   mostrarLogin, handleLogin,
   mostrarRegistro, handleRegister,
   mostrarOlvido, handleOlvido, mostrarReset, handleReset,
-  logout
+  logout,
+  fechaNacimientoValida
 };

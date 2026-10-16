@@ -362,3 +362,40 @@
 }
 .sidebar-usuario-datos small { color: var(--gris); font-size: 0.75rem; }
 .sidebar-chevron { color: var(--gris); }
+
+/* Cerrar sesión en el menú lateral: gris, y rojo suave al pasar el mouse */
+.sidebar-salir {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 16px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: none;
+  color: var(--gris);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.sidebar-salir:hover {
+  color: var(--rojo);
+  border-color: rgba(224, 87, 76, 0.35);
+  background: rgba(224, 87, 76, 0.08);
+}
+
+/* Botón de salir del header: mismo estilo que la campana, rojo al pasar el mouse */
+.cabecera-salir { display: flex; }
+.cabecera-salir .campana {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.cabecera-salir .campana:hover { color: var(--rojo); }
+
+/* En escritorio ya está en el menú lateral */
+@media (min-width: 960px) {
+  .cabecera-salir { display: none; }
+}
