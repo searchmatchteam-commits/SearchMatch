@@ -3,6 +3,8 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,9 +14,31 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Landing page (todavía no hay sesión, por eso user es null)
+// Leer los datos enviados por formularios (req.body)
+app.use(express.urlencoded({ extended: false }));
+
+// Sesiones: guardan quién inició sesión mediante una cookie firmada
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,                                  // el JavaScript del navegador no puede leerla
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',   // solo HTTPS en producción
+    maxAge: 1000 * 60 * 60 * 24 * 7                  // 7 días
+  }
+}));
+
+// Mensajes de una sola vez entre redirecciones (req.flash)
+app.use(flash());
+
+// Rutas de autenticación (/login, /logout)
+app.use(require('./routes/auth'));
+
+// Landing page (user es null si nadie ha iniciado sesión)
 app.get('/', (req, res) => {
-  res.render('home', { user: null });
+  res.render('home', { user: req.session.user || null });
 });
 
 // Iniciar servidor y probar la conexión a Supabase
@@ -28,7 +52,7 @@ app.listen(PORT, async () => {
   }
 
   const supabase = require('./config/db');
-  const { error } = await supabase.from('usuario').select('id_usuario').limit(1);
+  const { error } = await supabase.from('usuario').select('id').limit(1);
 
   if (error) {
     console.error('Error al conectar con Supabase:', error.message);

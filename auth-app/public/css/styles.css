@@ -2669,3 +2669,131 @@ button.btn-filtrar {
     transition: none;
   }
 }
+
+
+/* =========================================================
+   PANTALLAS DE ACCESO CON BARRA SUPERIOR
+   (login, registro, recuperar contraseña)
+   ========================================================= */
+
+/* El atributo hidden siempre oculta, aunque la clase tenga display: flex */
+[hidden] {
+  display: none !important;
+}
+
+/* Barra arriba (ancho completo) y el resto de la pantalla para el formulario */
+.auth-pagina {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+}
+
+/* Centra el formulario vertical y horizontalmente en el espacio libre */
+.auth-centro {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* Login: un poco más ancho, como en el diseño */
+.auth-body .auth {
+  max-width: 460px;
+}
+
+/* Registro: la tarjeta ocupa todo el ancho de la columna */
+.auth-card-ancha {
+  width: 100%;
+  text-align: left;
+}
+
+/* En el registro el subtítulo y la tarjeta van más juntos */
+.auth-body-registro .auth-subtitulo {
+  margin-bottom: 32px;
+}
+
+/* El texto de los inputs date usa el mismo gris que los placeholders mientras está vacío */
+.campo-caja input[type="date"]:invalid {
+  color: var(--gris);
+}
+
+/* Botón para mostrar/ocultar la contraseña dentro del input */
+.btn-ojo {
+  display: flex;
+  padding: 4px;
+  background: none;
+  border: none;
+  color: var(--gris);
+  cursor: pointer;
+}
+
+.btn-ojo:hover,
+.btn-ojo:focus-visible {
+  color: var(--neon);
+}
+
+/* Botón principal cuando no hay un enlace encima ("¿Olvidaste...?") que lo separe */
+.btn-separado {
+  margin-top: 12px;
+}
+
+.btn-flecha {
+  font-size: 20px;
+}
+
+/* Estado "cargando": botón apagado, sin brillo ni flecha */
+.btn-neon:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn-neon.cargando .btn-flecha {
+  display: none;
+}
+
+/* Spinner: solo se ve mientras el botón tiene la clase .cargando */
+.spinner {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(18, 18, 18, 0.3);
+  border-top-color: var(--fondo);
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+
+.btn-neon.cargando .spinner {
+  display: inline-block;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+
+/* "Volver al inicio": botón secundario como "Ya tengo cuenta" */
+.btn-volver {
+  gap: 6px;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.btn-volver .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* En celulares la barra oculta los botones que no son verdes (ver RESPONSIVE),
+   pero en el registro "Iniciar sesión" es el único acceso: lo mantenemos visible */
+.landing-nav .btn-nav.btn-nav-mostrar {
+  display: inline-block;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2s;
+  }
+}

@@ -1,0 +1,94 @@
+<%- include('partials/head', { titulo: 'Crear cuenta', descripcion: 'Crea tu cuenta en SearchMatch y empieza a jugar.' }) %>
+<body class="auth-body-registro auth-pagina">
+
+  <%- include('partials/auth-nav', { accion: 'login' }) %>
+
+  <!-- Contenido centrado -->
+  <main class="auth-centro">
+    <section class="auth">
+      <div class="auth-logo"><span class="material-symbols-outlined">sports_soccer</span></div>
+      <h1 class="auth-titulo">Crea tu Cuenta</h1>
+      <p class="auth-subtitulo">Regístrate como usuario para encontrar<br>partidos y unirte a la cancha</p>
+
+      <div class="auth-card auth-card-ancha">
+        <!-- Error en rojo sutil -->
+        <% if (error) { %>
+          <div class="alert alert-error" role="alert"><%= error %></div>
+        <% } %>
+
+        <form class="auth-form" action="/register" method="POST" id="form-auth"
+              data-texto="REGISTRARSE" data-texto-cargando="CREANDO CUENTA...">
+          <!-- Cada input va en su caja oscura; el aria-label reemplaza a la etiqueta visible -->
+          <div class="campo-caja">
+            <span class="material-symbols-outlined">mail</span>
+            <input type="email" name="correo" value="<%= datos.correo %>" aria-label="Correo electrónico"
+                   placeholder="Correo electrónico" autocomplete="email" required autofocus>
+          </div>
+
+          <div class="campo-caja">
+            <span class="material-symbols-outlined">alternate_email</span>
+            <input type="email" name="correo_secundario" value="<%= datos.correo_secundario %>"
+                   aria-label="Correo secundario (opcional)" placeholder="Correo secundario (opcional)">
+          </div>
+
+          <div class="campo-caja">
+            <span class="material-symbols-outlined">smartphone</span>
+            <input type="tel" name="telefono" value="<%= datos.telefono %>" aria-label="Número de teléfono / WhatsApp"
+                   placeholder="Número de teléfono / WhatsApp" autocomplete="tel" inputmode="tel" required>
+          </div>
+
+          <div class="campo-caja" title="Fecha de nacimiento">
+            <span class="material-symbols-outlined">cake</span>
+            <!-- max: no se puede elegir una fecha futura -->
+            <input type="date" name="fecha_nacimiento" value="<%= datos.fecha_nacimiento %>"
+                   aria-label="Fecha de nacimiento" autocomplete="bday" min="1900-01-01"
+                   max="<%= new Date().toISOString().slice(0, 10) %>" required>
+          </div>
+
+          <div class="campo-caja">
+            <span class="material-symbols-outlined">lock</span>
+            <input type="password" id="contrasena" name="contrasena" aria-label="Contraseña"
+                   placeholder="Crea tu contraseña (8 a 72 caracteres)" autocomplete="new-password"
+                   minlength="8" maxlength="72" required>
+            <!-- Mostrar u ocultar la contraseña (ver /js/auth-form.js) -->
+            <button type="button" class="btn-ojo" data-ver="contrasena" aria-label="Mostrar contraseña">
+              <span class="material-symbols-outlined">visibility</span>
+            </button>
+          </div>
+
+          <div class="campo-caja">
+            <span class="material-symbols-outlined">lock_reset</span>
+            <input type="password" id="confirmar" name="confirmar" aria-label="Confirma tu contraseña"
+                   placeholder="Confirma tu contraseña" autocomplete="new-password"
+                   minlength="8" maxlength="72" required>
+            <button type="button" class="btn-ojo" data-ver="confirmar" aria-label="Mostrar contraseña">
+              <span class="material-symbols-outlined">visibility</span>
+            </button>
+          </div>
+
+          <label class="terminos">
+            <input type="checkbox" name="terminos" required>
+            <span>Acepto los <a href="/terminos" target="_blank">Términos y Condiciones</a>
+              y la <a href="/privacidad" target="_blank">Política de Privacidad</a></span>
+          </label>
+
+          <!-- Al enviar, auth-form.js deshabilita el botón y muestra el spinner -->
+          <button type="submit" class="btn-neon btn-neon-fuerte">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-texto">REGISTRARSE</span>
+            <span class="material-symbols-outlined btn-flecha">arrow_forward</span>
+          </button>
+        </form>
+      </div>
+
+      <p class="auth-pie">¿Ya tienes cuenta? <a href="/login">Inicia Sesión</a></p>
+
+      <a href="/" class="btn-borde btn-volver">
+        <span class="material-symbols-outlined">arrow_back</span>Volver al inicio
+      </a>
+    </section>
+  </main>
+
+  <script src="/js/auth-form.js"></script>
+</body>
+</html>

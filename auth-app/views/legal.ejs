@@ -1,0 +1,61 @@
+<%
+  // Una sola plantilla para las dos páginas legales: cambia el título y las secciones
+  const esTerminos = tipo === 'terminos';
+  const titulo = esTerminos ? 'Términos y Condiciones' : 'Política de Privacidad';
+%>
+<%- include('partials/head', { titulo, descripcion: `${titulo} de SearchMatch.` }) %>
+<body class="legal-body">
+
+  <%- include('partials/auth-nav', { accion: 'register' }) %>
+
+  <main class="legal">
+    <h1 class="legal-titulo"><%= titulo %></h1>
+    <p class="legal-fecha">Borrador · pendiente de revisión legal</p>
+
+    <% if (esTerminos) { %>
+      <section class="legal-seccion">
+        <h2>1. Sobre SearchMatch</h2>
+        <p>SearchMatch es una plataforma para conectar jugadores, equipos y recintos de fútbol amateur en Chile.
+          Al crear una cuenta aceptas estos términos.</p>
+      </section>
+      <section class="legal-seccion">
+        <h2>2. Tu cuenta</h2>
+        <p>Eres responsable de que tus datos sean verdaderos y de mantener tu contraseña en secreto.
+          Podemos suspender cuentas que usen datos falsos o hagan mal uso de la plataforma.</p>
+      </section>
+      <section class="legal-seccion">
+        <h2>3. Partidos y reservas</h2>
+        <p>SearchMatch facilita el contacto entre usuarios, equipos y recintos, pero no organiza los partidos
+          ni administra las canchas. Cada recinto define sus propias condiciones de reserva y pago.</p>
+      </section>
+      <section class="legal-seccion">
+        <h2>4. Conducta</h2>
+        <p>Trata con respeto a los demás usuarios. No se permiten comentarios ofensivos, discriminatorios
+          ni el uso de la plataforma para fines distintos al fútbol amateur.</p>
+      </section>
+    <% } else { %>
+      <section class="legal-seccion">
+        <h2>1. Datos que recopilamos</h2>
+        <ul>
+          <li>Correo electrónico (y correo secundario, si lo agregas).</li>
+          <li>Número de teléfono / WhatsApp.</li>
+          <li>Fecha de nacimiento.</li>
+          <li>La información de juego que agregues a tu perfil (posiciones, equipos, partidos).</li>
+        </ul>
+      </section>
+      <section class="legal-seccion">
+        <h2>2. Para qué los usamos</h2>
+        <p>Para crear y proteger tu cuenta, y para que equipos y jugadores puedan coordinar partidos contigo.
+          Tu número solo se comparte con quienes participan en un partido o equipo contigo.</p>
+      </section>
+      <section class="legal-seccion">
+        <h2>3. Tus derechos</h2>
+        <p>Conforme a la Ley N° 19.628 sobre Protección de la Vida Privada, puedes pedir acceso, corrección
+          o eliminación de tus datos escribiéndonos a [correo de contacto].</p>
+      </section>
+    <% } %>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

@@ -83,9 +83,10 @@ CREATE TABLE usuario (
     correo VARCHAR(150) NOT NULL UNIQUE,
     correo_secundario VARCHAR(150),
     telefono VARCHAR(20),
-    contrasena VARCHAR(255) NOT NULL,
+    contrasena VARCHAR(255),  -- obsoleta: la contraseña la maneja Supabase Auth
     id_rol_aplicacion INTEGER NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT TRUE,
+    auth_id UUID UNIQUE REFERENCES auth.users(id) ON DELETE CASCADE,  -- cuenta de Supabase Auth
     CONSTRAINT fk_usuario_rol_aplicacion
         FOREIGN KEY (id_rol_aplicacion)
         REFERENCES rol_aplicacion(id)

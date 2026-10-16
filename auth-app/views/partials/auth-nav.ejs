@@ -1,0 +1,11 @@
+<!-- Barra superior de las pantallas de acceso (igual a la de la landing) -->
+<header class="landing-nav">
+  <%- include('marca', { enlace: '/' }) %>
+  <nav class="landing-nav-acciones">
+    <% if (accion === 'login') { %>
+      <a href="/login" class="btn-nav btn-nav-mostrar">Iniciar sesión</a>
+    <% } else { %>
+      <a href="/register" class="btn-nav btn-nav-neon">Registrarse</a>
+    <% } %>
+  </nav>
+</header>
