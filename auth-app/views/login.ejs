@@ -1,59 +1,29 @@
-<%- include('partials/head', { titulo: 'Iniciar sesión', descripcion: 'Inicia sesión en SearchMatch para encontrar partidos, equipos y canchas.', scripts: ['/js/auth-form.js'] }) %>
-<body class="auth-body auth-pagina">
+<!DOCTYPE html>
+<html lang="es" class="overflow-x-clip">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>SearchMatch | Iniciar sesión</title>
+  <meta name="description" content="Inicia sesión en SearchMatch para ver tus partidos, tu carta y tus próximos rivales.">
+  <!-- Fuentes e íconos de Google (los mismos del resto del sitio) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0" rel="stylesheet">
+  <!-- Tailwind (CDN) con la configuración del sitio -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/js/tailwind-config.js"></script>
+  <!-- App de React (módulo ES, sin paso de compilación) -->
+  <script type="module" src="/js/acceso.js"></script>
+</head>
+<body class="min-h-screen overflow-x-clip bg-ink font-sans text-base text-white antialiased selection:bg-neon selection:text-black">
 
-  <%- include('partials/auth-nav', { accion: 'register' }) %>
+  <!-- React monta aquí la pantalla de acceso. data-error / data-exito: mensajes de una sola vez (flash) -->
+  <div id="acceso" data-error="<%= error || '' %>" data-exito="<%= exito || '' %>"></div>
 
-  <!-- Contenido centrado -->
-  <main class="auth-centro">
-    <section class="auth">
-      <div class="auth-logo"><span class="material-symbols-outlined">sports_soccer</span></div>
-      <h1 class="auth-titulo">Iniciar Sesión</h1>
-      <p class="auth-subtitulo">Ingresa a tu cuenta para saltar a la cancha</p>
-
-      <!-- Mensajes: error en rojo sutil, éxito en verde (ej. después de registrarse) -->
-      <% if (error) { %>
-        <div class="alert alert-error" role="alert"><%= error %></div>
-      <% } %>
-      <% if (exito) { %>
-        <div class="alert alert-success" role="status"><%= exito %></div>
-      <% } %>
-
-      <form class="auth-form" action="/login" method="POST" id="form-auth"
-            data-texto="INICIAR SESIÓN" data-texto-cargando="INGRESANDO...">
-        <!-- Inputs en caja oscura (.input-group): icono + input comparten fondo y borde -->
-        <div class="input-group">
-          <span class="material-symbols-outlined">mail</span>
-          <input type="email" name="correo" value="<%= correo %>" aria-label="Correo electrónico"
-                 placeholder="Correo electrónico" autocomplete="email" required autofocus>
-        </div>
-
-        <div class="input-group">
-          <span class="material-symbols-outlined">lock</span>
-          <input type="password" id="contrasena" name="contrasena" aria-label="Contraseña"
-                 placeholder="Contraseña" autocomplete="current-password" required>
-          <!-- Mostrar u ocultar la contraseña (ver /js/auth-form.js) -->
-          <button type="button" class="btn-ojo" data-ver="contrasena" aria-label="Mostrar contraseña">
-            <span class="material-symbols-outlined">visibility</span>
-          </button>
-        </div>
-
-        <a href="/forgot-password" class="olvidaste">¿Olvidaste tu contraseña?</a>
-
-        <!-- Al enviar, auth-form.js deshabilita el botón y muestra el spinner -->
-        <button type="submit" class="btn-neon">
-          <span class="spinner" aria-hidden="true"></span>
-          <span class="btn-texto">INICIAR SESIÓN</span>
-        </button>
-      </form>
-
-      <p class="auth-pie">¿No tienes cuenta? <a href="/register">Regístrate</a></p>
-
-      <a href="/" class="btn-borde btn-volver">
-        <span class="material-symbols-outlined">arrow_back</span>Volver al inicio
-      </a>
-    </section>
-  </main>
-
-  <!-- Sin <script> en el EJS: auth-form.js se carga con defer desde partials/head -->
+  <noscript>
+    <p style="padding:24px;font-family:sans-serif;color:#fff">Activa JavaScript para iniciar sesión.</p>
+  </noscript>
 </body>
 </html>

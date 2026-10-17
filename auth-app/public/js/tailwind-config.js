@@ -11,7 +11,8 @@ tailwind.config = {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        display: ['Montserrat', 'sans-serif']
+        display: ['Montserrat', 'sans-serif'],
+        condensada: ['"Barlow Condensed"', 'sans-serif']  // carta de jugador
       },
       maxWidth: {
         contenido: '1280px',
@@ -28,6 +29,36 @@ tailwind.config = {
           '0%': { opacity: '0', transform: 'translateY(8px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' }
         },
+        // Cambio de pantalla del registro: fade + slide horizontal (adelante / atrás)
+        deslizar: {
+          '0%': { opacity: '0', transform: 'translateX(24px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' }
+        },
+        'deslizar-atras': {
+          '0%': { opacity: '0', transform: 'translateX(-24px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' }
+        },
+        // Salida de la pantalla de acceso al entrar a la cuenta
+        salir: {
+          '0%': { opacity: '1', transform: 'translateX(0)' },
+          '100%': { opacity: '0', transform: 'translateX(-24px)' }
+        },
+        // Entrada de una página (ej. el perfil al venir desde la confirmación)
+        'entrar-pagina': {
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' }
+        },
+        // Carta de jugador: se da vuelta al aparecer
+        voltear: {
+          '0%': { opacity: '0', transform: 'rotateY(90deg)' },
+          '100%': { opacity: '1', transform: 'rotateY(0)' }
+        },
+        // Destello verde que cruza la carta una vez
+        destello: {
+          '0%': { transform: 'translateX(-130%) skewX(-18deg)', opacity: '0' },
+          '15%': { opacity: '1' },
+          '100%': { transform: 'translateX(230%) skewX(-18deg)', opacity: '0' }
+        },
         // Check de la confirmación (escala + fundido)
         aparecer: {
           '0%': { opacity: '0', transform: 'scale(.6)' },
@@ -36,7 +67,13 @@ tailwind.config = {
       },
       animation: {
         entrar: 'entrar .2s ease-out both',
-        aparecer: 'aparecer .4s cubic-bezier(.34,1.4,.64,1) both'
+        aparecer: 'aparecer .4s cubic-bezier(.34,1.4,.64,1) both',
+        'entrar-pagina': 'entrar-pagina .3s ease-out both',
+        deslizar: 'deslizar .25s ease-out both',
+        salir: 'salir .25s ease-in both',
+        'deslizar-atras': 'deslizar-atras .25s ease-out both',
+        voltear: 'voltear .7s cubic-bezier(.22,1,.36,1) both',
+        destello: 'destello .9s .55s ease-out both'
       }
     }
   }

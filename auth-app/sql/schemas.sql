@@ -102,13 +102,10 @@ CREATE TABLE jugador (
     nombre_apodo VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     id_usuario INTEGER NOT NULL UNIQUE,
-    id_nivel INTEGER,  -- nivel que el jugador elige en el registro (perfil deportivo)
+    foto_url TEXT,     -- foto de la carta de jugador (bucket fotos-jugadores de Supabase Storage)
     CONSTRAINT fk_jugador_usuario
         FOREIGN KEY (id_usuario)
         REFERENCES usuario(id),
-    CONSTRAINT fk_jugador_nivel
-        FOREIGN KEY (id_nivel)
-        REFERENCES nivel(id),
     CHECK (altura IS NULL OR altura > 0),
     CHECK (peso IS NULL OR peso > 0)
 );
@@ -138,12 +135,18 @@ CREATE TABLE equipo (
     id_usuario_creador INTEGER NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT TRUE,
     puntaje_nivel INTEGER NOT NULL DEFAULT 0,
+    correo_contacto VARCHAR(150),  -- correo de contacto del club
+    escudo_url TEXT,               -- escudo del club (bucket escudos-equipos de Supabase Storage)
+    id_modalidad INTEGER,          -- tipo de fútbol habitual (5, 7 u 11)
     CONSTRAINT fk_equipo_comuna
         FOREIGN KEY (id_comuna)
         REFERENCES comunas(id),
     CONSTRAINT fk_equipo_usuario_creador
         FOREIGN KEY (id_usuario_creador)
         REFERENCES usuario(id),
+    CONSTRAINT fk_equipo_modalidad
+        FOREIGN KEY (id_modalidad)
+        REFERENCES modalidad(id),
     CHECK (puntaje_nivel >= 0)
 );
 -- =====================================================

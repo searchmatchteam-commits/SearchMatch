@@ -20,7 +20,8 @@
 <body class="min-h-screen overflow-x-clip bg-ink font-sans text-base text-white antialiased selection:bg-neon selection:text-black">
 
   <!-- React monta aquí la página completa. Los data-* pasan datos del servidor a la app -->
-  <div id="onboarding" data-fecha="<%= fechaNacimiento %>" data-hoy="<%= hoy %>" data-anio="<%= new Date().getFullYear() %>"></div>
+  <div id="onboarding" data-fecha="<%= fechaNacimiento %>" data-tipo="<%= tipoCuenta %>"
+    data-correo="<%= correo %>" data-comunas="<%= JSON.stringify(comunas) %>" data-hoy="<%= hoy %>"></div>
 
   <noscript>
     <p style="padding:24px;font-family:sans-serif;color:#fff">Activa JavaScript para completar tu registro.</p>

@@ -6,6 +6,9 @@ const router = express.Router();
 
 router.get('/login', soloInvitados, auth.mostrarLogin);
 router.post('/login', soloInvitados, auth.handleLogin);
+// Continuar con Google (Supabase OAuth): ida a Google y vuelta con el código
+router.get('/auth/google', soloInvitados, auth.iniciarGoogle);
+router.get('/auth/callback', auth.callbackGoogle);
 router.get('/register', soloInvitados, auth.mostrarRegistro);
 router.post('/register', soloInvitados, auth.handleRegister);
 router.get('/forgot-password', soloInvitados, auth.mostrarOlvido);

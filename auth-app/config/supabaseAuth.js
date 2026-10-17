@@ -3,8 +3,9 @@ require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 
 // Se crea un cliente nuevo en cada petición para que la sesión de un usuario
-// nunca se mezcle con la de otro (el servidor atiende a todos a la vez)
-function crearClienteAuth() {
+// nunca se mezcle con la de otro (el servidor atiende a todos a la vez).
+// opcionesAuth: ajustes extra de auth (ej. el flujo PKCE de "Continuar con Google")
+function crearClienteAuth(opcionesAuth = {}) {
   const supabaseUrl = (process.env.SUPABASE_URL || '').trim().replace(/\/+$/, '');
   // Acepta el nombre nuevo (PUBLISHABLE) o el clásico (ANON_KEY)
   const publicKey = (
@@ -18,7 +19,7 @@ function crearClienteAuth() {
   }
 
   return createClient(supabaseUrl, publicKey, {
-    auth: { persistSession: false, autoRefreshToken: false }
+    auth: { persistSession: false, autoRefreshToken: false, ...opcionesAuth }
   });
 }
 

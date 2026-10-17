@@ -5,7 +5,7 @@
     { id: 'inicio',   texto: 'Inicio',   icono: 'home',           enlace: '/users/dashboard' },
     { id: 'canchas',  texto: 'Canchas',  icono: 'stadium',        enlace: '#' },
     { id: 'partidos', texto: 'Partidos', icono: 'calendar_month', enlace: '#' },
-    { id: 'perfil',   texto: 'Perfil',   icono: 'person',         enlace: '#' }
+    { id: 'perfil',   texto: 'Perfil',   icono: 'person',         enlace: '/users/perfil' }
   ];
 %>
 <!-- Menú lateral fijo a la izquierda (solo en escritorio; en celular se usa el menú inferior) -->
@@ -23,7 +23,7 @@
   </nav>
 
   <!-- Tarjeta del usuario abajo del todo -->
-  <a href="#" class="sidebar-usuario">
+  <a href="/users/perfil" class="sidebar-usuario">
     <span class="sidebar-avatar"><%= (usuario.nombre || 'J').charAt(0).toUpperCase() %></span>
     <span class="sidebar-usuario-datos">
       <strong><%= usuario.nombre %></strong>

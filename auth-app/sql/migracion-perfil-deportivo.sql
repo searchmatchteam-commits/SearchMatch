@@ -1,15 +1,6 @@
--- Migración para bases ya creadas: agrega el nivel al jugador y carga posiciones y niveles.
+-- Migración para bases ya creadas: carga las posiciones y los niveles.
+-- Los niveles son para el perfil de equipo (el jugador solo elige su posición).
 -- Ejecutar una vez en el SQL Editor de Supabase (se puede repetir sin problemas).
-
-ALTER TABLE jugador ADD COLUMN IF NOT EXISTS id_nivel INTEGER;
-
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_jugador_nivel') THEN
-        ALTER TABLE jugador
-            ADD CONSTRAINT fk_jugador_nivel FOREIGN KEY (id_nivel) REFERENCES nivel(id);
-    END IF;
-END $$;
 
 INSERT INTO posicion (nombre) VALUES
     ('Delantero'),

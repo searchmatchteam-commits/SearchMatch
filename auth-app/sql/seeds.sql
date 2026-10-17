@@ -16,9 +16,12 @@ INSERT INTO posicion (nombre) VALUES
     ('Arquero')
 ON CONFLICT (nombre) DO NOTHING;
 
--- Niveles de juego (paso "Perfil deportivo" del registro)
+-- Niveles de juego (para el perfil de equipo)
 INSERT INTO nivel (nombre, puntaje_min, puntaje_max) VALUES
     ('Principiante', 0, 399),
     ('Intermedio', 400, 699),
     ('Avanzado', 700, 1000)
 ON CONFLICT (nombre) DO NOTHING;
+
+-- Tipos de fútbol, región y comunas (registro de equipos): ver sql/migracion-equipos.sql,
+-- que también sirve para una base nueva (se puede ejecutar después de este archivo)

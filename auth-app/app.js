@@ -45,11 +45,16 @@ app.use(require('./routes/onboarding'));
 // Panel principal (/users/dashboard): requiere sesión
 app.use('/users', require('./routes/dashboard'));
 
+// Perfil del jugador y su carta (/users/perfil, /users/carta/:id)
+app.use('/users', require('./routes/perfil'));
+
 // Atajo: /dashboard redirige a /users/dashboard
 app.get('/dashboard', (req, res) => res.redirect('/users/dashboard'));
 
 // Landing page (user es null si nadie ha iniciado sesión)
 app.get('/', (req, res) => {
+  // Vuelta de "Continuar con Google" cuando Supabase usa la Site URL en vez de /auth/callback
+  if (req.query.code) return res.redirect(`/auth/callback?code=${encodeURIComponent(req.query.code)}`);
   res.render('home', { user: req.session.user || null });
 });
 
